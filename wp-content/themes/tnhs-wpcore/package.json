@@ -1,0 +1,29 @@
+{
+  "name": "tnhs",
+  "version": "1.0.0",
+  "description": "Setup package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tnhs",
+  "license": "ISC",
+  "browserslist": [
+    "defaults and supports es6-module",
+    "maintained node versions"
+  ],
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-postcss": "^9.0.1",
+    "gulp-sass": "^5.1.0",
+    "postcss": "^8.4.26",
+    "postcss-load-config": "^4.0.1",
+    "sass": "^1.64.1",
+    "tailwindcss": "^3.3.3"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.14",
+    "cssnano": "^6.0.1",
+    "gulp-minify": "^3.1.0"
+  }
+}
