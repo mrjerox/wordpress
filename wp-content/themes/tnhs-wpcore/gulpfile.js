@@ -39,5 +39,6 @@ exports.default = () => {
         '*.php',
         './page-template/*.php',
         './template-parts/**/*.php',
+        './woocommerce/**/*.php',
     ], { events: 'change' }, gulp.parallel(css, js))
 }

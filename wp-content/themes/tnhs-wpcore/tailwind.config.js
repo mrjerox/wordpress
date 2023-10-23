@@ -4,6 +4,7 @@ module.exports = {
     "*.php",
     "./page-template/*.php",
     "./template-parts/**/*.php",
+    "./woocommerce/**/*.php",
   ],
   theme: {
     fontFamily: {
