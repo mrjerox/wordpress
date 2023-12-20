@@ -7,10 +7,11 @@
 			<a href="#">Home</a> / <span>Sheet Music</span>
 		</div>
 		<div class="sheet-list grid grid-cols-4 gap-8">
-			<?php get_template_part('template-parts/products/sheet-item');?>
-			<?php get_template_part('template-parts/products/sheet-item');?>
-			<?php get_template_part('template-parts/products/sheet-item');?>
-			<?php get_template_part('template-parts/products/sheet-item');?>
+			<?php get_template_part('template-parts/components/products/sheet-item');?>
+			<?php get_template_part('template-parts/components/products/sheet-item');?>
+			<?php get_template_part('template-parts/components/products/sheet-item');?>
+			<?php get_template_part('template-parts/components/products/sheet-item');?>
 		</div>
 	</div>
 </section>
+<script src="<?=THEME_ASSETS?>/js/home.js" defer></script>

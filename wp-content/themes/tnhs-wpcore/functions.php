@@ -14,7 +14,7 @@
 if (!defined("VERSION")) {
     // Replace the version number of the theme on each release.
     define("VERSION", "1.0.0");
-    define("TEXTDOMAIN", "wpcore");
+    define("TEXTDOMAIN", "core");
     define("HOME_URL", get_home_url());
     define("THEME_DIR", get_template_directory());
     define("THEME_URI", get_template_directory_uri());
@@ -39,8 +39,11 @@ class Core
 
     public function __construct()
     {
-        add_action("after_setup_theme", [$this, "wpcore_setup"]);
-        add_action("wp_enqueue_scripts", [$this, "wpcore_enqueue"]);
+        add_action("after_setup_theme", array($this, "core_setup"));
+        add_action("wp_enqueue_scripts", array($this, "core_enqueue"));
+        add_action("template_redirect", array($this, "remove_wc_assets"));
+        add_filter("woocommerce_enqueue_styles", array($this, "woocommerce_enqueue_styles"));
+        add_action('init', array($this, "core_init"));
     }
 
     public static function instance()
@@ -51,7 +54,12 @@ class Core
         return self::$_instance;
     }
 
-    public function wpcore_setup()
+    public static function is_wc_page()
+    {
+        return class_exists('WooCommerce') && (is_woocommerce());
+    }
+
+    public function core_setup()
     {
         load_theme_textdomain(
             TEXTDOMAIN,
@@ -68,7 +76,7 @@ class Core
             "style",
             "script",
         ]);
-        add_theme_support( 'woocommerce' );
+        add_theme_support('woocommerce');
         if (!current_user_can("administrator")) {
             add_theme_support("soil", [
                 "clean-up",
@@ -87,7 +95,7 @@ class Core
     /**
      * Enqueue scripts and styles.
      */
-    function wpcore_enqueue()
+    public function core_enqueue()
     {
         // CSS
         wp_enqueue_style(
@@ -101,13 +109,62 @@ class Core
         );
         // JS
         wp_enqueue_script(
+            "lazy-loading",
+            "https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.5/dist/lazyload.min.js",
+            false,
+            true
+        );
+        wp_enqueue_script(
             "wpcore-js",
-            THEME_ASSETS . "/js/scripts.min.js",
+            THEME_ASSETS . "/js/scripts.js",
             VERSION,
             true
         );
+        // Remove woocomerce style
+        if (self::is_wc_page()) {
+            wp_dequeue_style('woocommerce-inline');
+        }
+        // Localize script
+        $wp_script_data = array(
+            'AJAX_URL' => ADMIN_AJAX_URL,
+        );
+        wp_localize_script('scripts', 'obj', $wp_script_data);
+    }
+
+    /**
+     * Init
+     */
+    public function core_init()
+    {
+        remove_action('wp_head', 'wc_gallery_noscript');
+    }
+
+    /*
+    * Woocomerce
+    */
+    public function woocommerce_enqueue_styles($enqueue_styles)
+    {
+        return self::is_wc_page() ? $enqueue_styles : array();
+    }
+
+    public function remove_wc_assets()
+    {
+        // if this is a WC page, abort.
+        if (self::is_wc_page()) {
+            return;
+        }
+        // remove WC generator tag
+        remove_filter('get_the_generator_html', 'wc_generator_tag', 10, 2);
+        remove_filter('get_the_generator_xhtml', 'wc_generator_tag', 10, 2);
+        // unload WC scripts
+        remove_action('wp_enqueue_scripts', [WC_Frontend_Scripts::class, 'load_scripts']);
+        remove_action('wp_print_scripts', [WC_Frontend_Scripts::class, 'localize_printed_scripts'], 5);
+        remove_action('wp_print_footer_scripts', [WC_Frontend_Scripts::class, 'localize_printed_scripts'], 5);
+        // remove "Show the gallery if JS is disabled"
+        remove_action('wp_head', 'wc_gallery_noscript');
+        // remove WC body class
+        remove_filter('body_class', 'wc_body_class');
     }
 }
 
 Core::instance();
-

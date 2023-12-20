@@ -22,7 +22,7 @@ const js = () => {
     return gulp.src('./assets/js/*.js')
         .pipe(minify({
             ext: {
-                // src: '-debug.js',
+                src: '-debug.js',
                 min: '.min.js',
             },
             noSource: true,

@@ -27,7 +27,7 @@ $id = get_the_ID();
 $product = wc_get_product($id);
 ?>
 
-<section class="box-product-detail">
+<section class="box-product-detail py-12">
 	<div class="container lg:max-w-screen-lg">
 		<div class="flex">
 			<div class="flex-1 w-25">
