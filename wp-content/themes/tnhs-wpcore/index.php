@@ -20,4 +20,5 @@ get_header(); ?>
 	get_template_part("template-parts/home/section2");
 	?>
 </main>
+<script src="<?=THEME_ASSETS?>/js/home.js" defer></script>
 <?php get_footer();

@@ -1,0 +1,77 @@
+.box-search 
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100vh
+    display: flex
+    align-items: center
+    justify-content: center
+    opacity: 0
+    visibility: hidden
+    z-index: 99
+    transition: all .4s ease
+
+    &.active 
+        visibility: visible
+        opacity: 1
+
+    form
+        width: 100%
+        max-width: 400px
+        position: relative
+        background-color: #fff
+        z-index: 99
+        background-color: hsla(0,0%,100%,.2)
+        border-color: hsla(0,0%,100%,.09)
+        border-radius: 9999px
+        color: #fff
+        font-size: 1rem
+        padding: 1rem 1rem 1rem 1.5rem
+        display: flex
+        align-items: center
+
+    input
+        background-color: transparent
+        border: 0
+        width: 100%
+        max-width: calc(100% - 32px)
+
+        &:focus-visible
+            outline: none
+
+        &::placeholder
+            color: #fff
+    
+    button
+        cursor: pointer
+        display: inline-block
+        padding-left: .5rem
+        padding-right: .5rem
+
+.mobile-menu
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 99
+    width: 70vw
+    height: 100vh
+    background-color: #fff
+    padding: 1rem
+    opacity: 0
+    visibility: hidden
+    transform: translateX(-100%)
+    transition: all .4s ease
+
+    &.active
+        transform: translateX(0)
+        visibility: visible
+        opacity: 1
+
+    ul
+        width: 100%
+
+    li
+        a
+            text-align: center
+            display: block

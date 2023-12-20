@@ -1,6 +1,6 @@
 <section class="box-home-other pb-12">
 	<div class="container lg:max-w-screen-lg">
-		<div class="grid grid-cols-3 gap-12">
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
 			<div class="best-selling">
 				<h3 class="title relative text-lg font-semibold mb-5 pb-2 before:content-[''] before:w-[50px] before:h-[3px] before:bg-gray-500 before:absolute before:bottom-0 before:left-0">Best Selling</h3>
 				<div class="other-list">
