@@ -13,19 +13,28 @@
 			</div>
 			<div class="filter-order text-sm">
 				<select class="p-1">
-					<option value="">Choose...</option>
-					<option value="">Soft by name: A -> Z</option>
-					<option value="">Soft by name: Z -> A</option>
-					<option value="">Soft by price: hight -> low</option>
-					<option value="">Soft by price: low -> hight</option>
+					<option value=""><?php _e('Choose...', 'core');?></option>
+					<option value=""><?php _e('Soft by name: A -> Z', 'core');?></option>
+					<option value=""><?php _e('Soft by name: Z -> A', 'core');?></option>
+					<option value=""><?php _e('Soft by price: hight -> low', 'core');?></option>
+					<option value=""><?php _e('Soft by price: low -> hight', 'core');?></option>
 				</select>
 			</div>
 		</div>
 		<div class="sheet-list grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-			<?php get_template_part('template-parts/components/products/sheet-item');?>
-			<?php get_template_part('template-parts/components/products/sheet-item');?>
-			<?php get_template_part('template-parts/components/products/sheet-item');?>
-			<?php get_template_part('template-parts/components/products/sheet-item');?>
+			<?php
+				$args = array(
+					'post_type' => 'product',
+					'posts_per_page' => 12,
+					'post_status' => 'publish',
+					'order' => 'DESC',
+				);
+
+				$sheets = new WP_Query($args);
+				while ($sheets->have_posts()) { $sheets->the_post() 
+			?>
+				<?php get_template_part('template-parts/components/products/sheet-item');?>
+			<?php } wp_reset_postdata();?>
 		</div>
 	</div>
 </section>

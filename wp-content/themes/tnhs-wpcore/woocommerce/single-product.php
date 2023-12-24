@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Template for displaying all single products
  *
@@ -30,15 +31,126 @@ $product = wc_get_product($id);
 <section class="box-product-detail py-12">
 	<div class="container lg:max-w-screen-lg">
 		<div class="flex">
-			<div class="flex-1 w-25">
-				<img src="https://picsum.photos/1000">
+			<div class="basis-1/2 max-w-[50%] flex-none pr-4">
+				<div class="swiper product-gallery-slide">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<img src="https://picsum.photos/1000" class="aspect-square object-cover lazy">
+						</div>
+						<div class="swiper-slide">
+							<img src="https://picsum.photos/1000" class="aspect-square object-cover lazy">
+						</div>
+						<div class="swiper-slide">
+							<img src="https://picsum.photos/1000" class="aspect-square object-cover lazy">
+						</div>
+						<div class="swiper-slide">
+							<img src="https://picsum.photos/1000" class="aspect-square object-cover lazy">
+						</div>
+					</div>
+					<div class="swiper-pagination"></div>
+				</div>
 			</div>
-			<div class="flex-1 w-50">
-				<img src="https://picsum.photos/1000">
+			<div class="basis-1/2 max-w-[50%] flex-none pl-4">
+				<?php
+				if (function_exists('custom_breadcrumb')) {
+					echo custom_breadcrumb();
+				}
+				?>
+				<h1 class="text-2xl font-semibold relative before:content-[''] before:w-[50px] before:h-[3px] before:bg-gray-500 before:absolute before:bottom-0 before:left-0 pb-3"><?php the_title()?></h1>
+				<span class="price block center font-semibold text-xl my-6">
+					<?= $product->get_price_html()?>
+				</span>
+				<div class="box-button mb-6">
+					<button data-nonce="<?=wp_create_nonce('add_to_cart')?>" data-product-id="<?=$id?>" type="button" class="btn btn-add uppercase px-4 py-2 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-gray-100 duration-300 font-medium text-sm"><?php _e('Thêm vào giỏ hàng', 'core');?><i class="fa-solid fa-cart-plus ml-2"></i></button>
+					<button data-nonce="<?=wp_create_nonce('add_to_cart')?>" data-product-id="<?=$id?>" type="button" class="btn btn-buy uppercase px-4 py-2 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-gray-100 duration-300 font-medium text-sm"><?php _e('Mua ngay', 'core');?><i class="fa-solid fa-money-check-dollar ml-2"></i></button> <br>
+					<button data-nonce="<?=wp_create_nonce('add_to_wishlist')?>" class="btn btn-wish uppercase px-4 py-2 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-gray-100 duration-300 font-medium mt-1 text-sm" data-product-id="<?=$id?>" data-product-type="<?=esc_attr($product->get_type()); ?>" data-original-product-id="<?= ($product->get_parent_id()) ? esc_attr($product->get_parent_id()) : esc_attr($id) ?>" data-title="Wish list"><?php _e('Yêu thích', 'core');?><i class="fa-solid fa-heart ml-2"></i></button>
+				</div>
+				<div class="categories text-sm border-dashed border-slate-300 border-t-[1px] py-2">
+					<?php $categories = get_the_terms($id, 'product_cat'); if (!empty($categories)) { ?>
+						<span><?php _e('Categories: ');?></span>
+						<?php foreach ($categories as $category) { ?>	
+							<a href="<?=get_term_link($category->term_id)?>"><?=$category->name?>,</a>
+						<?php } ?>
+					<?php } ?>
+				</div>
+				<div class="categories text-sm border-dashed border-slate-300 border-t-[1px] py-2">
+					<?php $tags = get_the_terms($id, 'product_tag'); if (!empty($tags)) { ?>
+						<span><?php _e('Tags: ');?></span>
+						<?php foreach ($tags as $tag) {	?>	
+							<a href="<?=get_term_link($tag->term_id)?>"><?=$tag->name?>,</a>
+						<?php } ?>
+					<?php } ?>
+				</div>
+				<div class="social-share mt-3">
+					<a href="https://www.facebook.com/sharer.php?u=<?=get_the_permalink()?>" target="_blank" class="inline-flex items-center justify-center w-[24px] h-[24px] hover:bg-black hover:text-white transition-all border-[1px] border-black mr-1">
+						<i class="fa-brands fa-facebook-f"></i>
+					</a>
+					<a target="_blank" href="http://twitter.com/share?url=<?=get_the_permalink()?>" class="inline-flex items-center justify-center w-[24px] h-[24px] hover:bg-black hover:text-white transition-all border-[1px] border-black mr-1">
+						<i class="fa-brands fa-square-x-twitter"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="product-desc mt-12">
+			<div class="desc-head border-t-[1px] border-slate-300 mb-3">
+				<div class="inline-block text-lg uppercase font-semibold relative before:content-[''] before:w-[100%] before:h-[2px] before:bg-gray-500 before:absolute before:top-[-1px] before:left-0 pt-2"><?php _e('Mô tả', 'core');?></div>
+			</div>
+			<div class="desc-body text-sm">
+				<?php the_content()?>
+			</div>
+		</div>
+		<div class="related-product mt-12 pb-12 border-b-[1px] border-slate-300">
+			<div class="related-head border-t-[1px] border-slate-300 mb-3">
+				<div class="inline-block text-lg uppercase font-semibold relative before:content-[''] before:w-[100%] before:h-[2px] before:bg-gray-500 before:absolute before:top-[-1px] before:left-0 pt-2"><?php _e('Có thể bạn sẽ thích', 'core');?></div>
+			</div>
+			<div class="related-product-slide swiper">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<?php get_template_part('template-parts/components/products/sheet-item');?>
+					</div>
+					<div class="swiper-slide">
+						<?php get_template_part('template-parts/components/products/sheet-item');?>
+					</div>
+					<div class="swiper-slide">
+						<?php get_template_part('template-parts/components/products/sheet-item');?>
+					</div>
+					<div class="swiper-slide">
+						<?php get_template_part('template-parts/components/products/sheet-item');?>
+					</div>
+					<div class="swiper-slide">
+						<?php get_template_part('template-parts/components/products/sheet-item');?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </section>
+<?php get_template_part("template-parts/home/section2"); ?>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		let productGallerySlide = new Swiper(".product-gallery-slide", {
+			slidesPerView: 1,
+			speed: 800,
+			autoplay: {
+				delay: 5000,
+			},
+			spaceBetween: 16,
+			pagination: {
+				el: ".swiper-pagination",
+			},
+		});
+
+		let relatedProductSlide = new Swiper(".related-product-slide", {
+			slidesPerView: 4,
+			spaceBetween: 16,
+			speed: 800,
+			autoplay: {
+				delay: 5000,
+			},
+		});
+	})
+</script>
 
 <?php get_footer("shop");
 

@@ -19,6 +19,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap')
 
 @import header
+@import keyframe
 
 .overlay
     position: absolute
@@ -32,6 +33,68 @@
 .site.disable
     overflow: hidden
     height: 100vh
+
+.btn
+    display: inline-block
+    cursor: pointer
+
+    &.pending
+        pointer-events: none
+        position: relative
+
+        &:after
+            content: ''
+            width: 100%
+            height: 100%
+            background-color: rgba(#fff, .9)
+            position: absolute
+            top: 0
+            left: 0
+
+        &:before
+            content: ''
+            width: 14px
+            height: 14px
+            border-radius: 50%
+            border-top: 2px solid #333
+            border-left: 2px solid #333
+            border-bottom: 2px solid #333
+            position: absolute
+            top: 30%
+            left: 50%
+            transform: translate(-50%, -50%)
+            transform-origin: center
+            animation: rolling .4s linear infinite
+            z-index: 9
+
+.desc-body
+    ul 
+        list-style: disc
+        padding-left: 20px
+        margin-bottom: 1rem
+        margin-top: 1rem
+
+        li
+            &:not(:last-child)
+                margin-bottom: .5rem
+
+    p
+        margin-bottom: 1rem
+        margin-top: 1rem
+
+    iframe
+        display: block
+        margin: 0 auto
+
+    img
+        display: block
+        margin: 0 auto
+        max-width: 100%
+
+    figure
+        max-width: 100%
+        display: block
+        margin: 0 auto
 
 .box-sheet-category
     position: fixed

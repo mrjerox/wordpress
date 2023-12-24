@@ -28,6 +28,7 @@ if (!defined("VERSION")) {
  * Include
  */
 require_once get_template_directory() . "/inc/Function.php";
+require_once get_template_directory() . "/inc/Menu.php";
 require_once get_template_directory() . "/inc/Woocommerce.php";
 
 /**
@@ -41,9 +42,6 @@ class Core
     {
         add_action("after_setup_theme", array($this, "core_setup"));
         add_action("wp_enqueue_scripts", array($this, "core_enqueue"));
-        add_action("template_redirect", array($this, "remove_wc_assets"));
-        add_filter("woocommerce_enqueue_styles", array($this, "woocommerce_enqueue_styles"));
-        add_action('init', array($this, "core_init"));
     }
 
     public static function instance()
@@ -52,11 +50,6 @@ class Core
             self::$_instance = new Core();
         }
         return self::$_instance;
-    }
-
-    public static function is_wc_page()
-    {
-        return class_exists('WooCommerce') && (is_woocommerce());
     }
 
     public function core_setup()
@@ -77,7 +70,7 @@ class Core
             "script",
         ]);
         add_theme_support('woocommerce');
-        if (!current_user_can("administrator")) {
+        if (!current_user_can("administrator") || !current_user_can("editor")) {
             add_theme_support("soil", [
                 "clean-up",
                 "disable-rest-api",
@@ -90,6 +83,14 @@ class Core
                 "relative-urls",
             ]);
         }
+
+        add_action('do_feed', array($this, "disable_rss_feed"), 1);
+        add_action('do_feed_rdf', array($this, "disable_rss_feed"), 1);
+        add_action('do_feed_rss', array($this, "disable_rss_feed"), 1);
+        add_action('do_feed_rss2', array($this, "disable_rss_feed"), 1);
+        add_action('do_feed_atom', array($this, "disable_rss_feed"), 1);
+        add_action('do_feed_rss2_comments', array($this, "disable_rss_feed"), 1);
+        add_action('do_feed_atom_comments', array($this, "disable_rss_feed"), 1);
     }
 
     /**
@@ -103,6 +104,10 @@ class Core
             "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         );
         wp_enqueue_style(
+            "swiper",
+            "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+        );
+        wp_enqueue_style(
             "wpcore-style",
             get_template_directory_uri() . "/style.css",
             VERSION
@@ -111,59 +116,49 @@ class Core
         wp_enqueue_script(
             "lazy-loading",
             "https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.5/dist/lazyload.min.js",
+            array(),
             false,
-            true
         );
         wp_enqueue_script(
-            "wpcore-js",
-            THEME_ASSETS . "/js/scripts.js",
-            VERSION,
-            true
+            "swiper",
+            "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js",
+            array(),
+            false,
         );
-        // Remove woocomerce style
-        if (self::is_wc_page()) {
-            wp_dequeue_style('woocommerce-inline');
-        }
+        wp_enqueue_script(
+            "sweet-alert",
+            "https://cdn.jsdelivr.net/npm/sweetalert2@11",
+            array(),
+            false,
+        );
         // Localize script
         $wp_script_data = array(
             'AJAX_URL' => ADMIN_AJAX_URL,
+            'ADD_TO_WISHLIST' => __('Đã thêm vào yêu thích', 'core'),
+            'ADD_TO_CART' => __('Đã thêm vào giỏ hàng', 'core'),
+            'CART_URL' => wc_get_cart_url(),
         );
-        wp_localize_script('scripts', 'obj', $wp_script_data);
+        wp_register_script('wpcore-js', THEME_ASSETS . "/js/scripts.js");
+        wp_localize_script('wpcore-js', 'obj', $wp_script_data);
+        wp_enqueue_script(
+            "wpcore-js",
+            THEME_ASSETS . "/js/scripts.js",
+            array(),
+            VERSION,
+            array(
+                'strategy' => 'defer'
+            ),
+        );
+        if (!current_user_can("administrator") || !current_user_can("editor")) {
+            wp_deregister_script('jquery');
+        }
     }
 
     /**
-     * Init
-     */
-    public function core_init()
-    {
-        remove_action('wp_head', 'wc_gallery_noscript');
-    }
-
-    /*
-    * Woocomerce
+     * Disable RSS
     */
-    public function woocommerce_enqueue_styles($enqueue_styles)
-    {
-        return self::is_wc_page() ? $enqueue_styles : array();
-    }
-
-    public function remove_wc_assets()
-    {
-        // if this is a WC page, abort.
-        if (self::is_wc_page()) {
-            return;
-        }
-        // remove WC generator tag
-        remove_filter('get_the_generator_html', 'wc_generator_tag', 10, 2);
-        remove_filter('get_the_generator_xhtml', 'wc_generator_tag', 10, 2);
-        // unload WC scripts
-        remove_action('wp_enqueue_scripts', [WC_Frontend_Scripts::class, 'load_scripts']);
-        remove_action('wp_print_scripts', [WC_Frontend_Scripts::class, 'localize_printed_scripts'], 5);
-        remove_action('wp_print_footer_scripts', [WC_Frontend_Scripts::class, 'localize_printed_scripts'], 5);
-        // remove "Show the gallery if JS is disabled"
-        remove_action('wp_head', 'wc_gallery_noscript');
-        // remove WC body class
-        remove_filter('body_class', 'wc_body_class');
+    public function disable_rss_feed() {
+        wp_die( __( 'No feed available, please visit the <a href="'. esc_url( home_url( '/' ) ) .'">homepage</a>!' ));
     }
 }
 
