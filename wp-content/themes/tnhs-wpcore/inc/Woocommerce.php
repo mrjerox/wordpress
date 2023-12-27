@@ -112,7 +112,6 @@ class Core_Woocommerce
 
 		$email = $_POST['register-email'];
 		$password = $_POST['register-pass'];
-		$fullname = $_POST['register-name'];
 
 		if (email_exists($email)) {
 			wp_send_json_error(__('Email đã được sử dụng.', 'core'));
@@ -123,7 +122,6 @@ class Core_Woocommerce
 			'user_login' => $email,
 			'user_email' => $email,
 			'user_pass' => $password,
-			'first_name' => $fullname,
 		);
 
 		$user_id = wp_insert_user($user_data);
@@ -131,11 +129,11 @@ class Core_Woocommerce
 		if (is_wp_error($user_id)) {
 			wp_send_json_error(__('Đăng ký không thành công, xin vui lòng thử lại.', 'core'));
 			exit;
-		} else {
-			update_user_meta($user_id, 'billing_first_name', $fullname);
-			update_user_meta($user_id, 'billing_last_name', ' ');
-			update_user_meta($user_id, 'billing_email', $email);
 		}
+
+		update_user_meta($user_id, 'billing_last_name', ' ');
+		update_user_meta($user_id, 'billing_email', $email);
+		wp_send_json_success(__('Done', 'core'));
 	}
 
 	public static function test_fetch()

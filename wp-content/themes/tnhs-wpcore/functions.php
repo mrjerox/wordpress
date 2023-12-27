@@ -70,7 +70,7 @@ class Core
             "script",
         ]);
         add_theme_support('woocommerce');
-        if (!current_user_can("administrator") || !current_user_can("editor")) {
+        if (!current_user_can("administrator")) {
             add_theme_support("soil", [
                 "clean-up",
                 "disable-rest-api",
@@ -131,25 +131,34 @@ class Core
             array(),
             false,
         );
+        wp_enqueue_script(
+            "form-validation",
+            THEME_ASSETS . '/scripts/form-validation.min.js',
+            array(),
+            false,
+        );
         // Localize script
         $wp_script_data = array(
             'AJAX_URL' => ADMIN_AJAX_URL,
             'ADD_TO_WISHLIST' => __('Đã thêm vào yêu thích', 'core'),
+            'ADD_TO_WISHLIST_EXIST' => __('Đã có trong yêu thích', 'core'),
             'ADD_TO_CART' => __('Đã thêm vào giỏ hàng', 'core'),
+            'ADD_TO_CART_FAILED' => __('Thêm vào giỏ hàng không thành công', 'core'),
+            'ACCOUNT_URL' => get_permalink(wc_get_page_id('myaccount')),
             'CART_URL' => wc_get_cart_url(),
         );
-        wp_register_script('wpcore-js', THEME_ASSETS . "/js/scripts.js");
+        wp_register_script('wpcore-js', THEME_ASSETS . "/scripts/scripts.min.js");
         wp_localize_script('wpcore-js', 'obj', $wp_script_data);
         wp_enqueue_script(
             "wpcore-js",
-            THEME_ASSETS . "/js/scripts.js",
+            THEME_ASSETS . "/scripts/scripts.min.js",
             array(),
             VERSION,
             array(
                 'strategy' => 'defer'
             ),
         );
-        if (!current_user_can("administrator") || !current_user_can("editor")) {
+        if (!current_user_can("administrator")) {
             wp_deregister_script('jquery');
         }
     }

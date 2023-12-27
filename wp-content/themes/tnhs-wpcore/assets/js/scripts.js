@@ -12,12 +12,18 @@ const post = async (data) => {
             body: (new URLSearchParams(data)).toString(),
         })
 
-        return response
+        return await response.json()
     } catch (error) {
         console.log(error)
     }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Lazyloading 
+    const lazyLoadInstance = new LazyLoad({
+        // Your custom settings go here
+    });
+
     // Menu
     const btnMenu = document.querySelector('#btn-menu')
     const boxMobileMenu = document.querySelector('#box-mobile-menu')
@@ -70,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             target.classList.toggle('pending')
             const response = await post(data)
 
-            if (response.ok) {
+            if (response.result !== 'exists') {
                 target.classList.toggle('pending')
 
                 const Toast = Swal.mixin({
@@ -84,18 +90,37 @@ document.addEventListener('DOMContentLoaded', () => {
                         toast.addEventListener('mouseleave', Swal.resumeTimer)
                     }
                 })
-        
+
                 Toast.fire({
                     icon: 'success',
                     title: obj.ADD_TO_WISHLIST
                 })
-            } else {
-                console.log(response)
+                return
             }
+
+            // Product exists in wishlist 
+            target.classList.toggle('pending')
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: obj.ADD_TO_WISHLIST_EXIST
+            })
+            return
         })
     })
 
-    // Handle add to wishlist
+    // Handle add to cart
     const btnAddToCart = document.querySelectorAll('.btn-add')
     btnAddToCart.forEach(element => {
         element.addEventListener('click', async (e) => {
@@ -110,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             target.classList.toggle('pending')
             const response = await post(data)
 
-            if (response.ok) {
+            if (response.success) {
                 target.classList.toggle('pending')
 
                 const Toast = Swal.mixin({
@@ -124,14 +149,33 @@ document.addEventListener('DOMContentLoaded', () => {
                         toast.addEventListener('mouseleave', Swal.resumeTimer)
                     }
                 })
-        
+
                 Toast.fire({
                     icon: 'success',
                     title: obj.ADD_TO_CART
                 })
-            } else {
-                console.log(response)
+                return
             }
+
+            // Failed
+            target.classList.toggle('pending')
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'error',
+                title: obj.ADD_TO_CART_FAILED
+            })
+            return
         })
     })
 
@@ -150,12 +194,15 @@ document.addEventListener('DOMContentLoaded', () => {
             target.classList.toggle('pending')
             const response = await post(data)
 
-            if (response.ok) {
+            if (response.success) {
                 target.classList.toggle('pending')
                 window.location.href = obj.CART_URL
-            } else {
-                console.log(response)
+                return
             }
+
+            // Failed
+            console.log(response)
+            return
         })
     })
 })

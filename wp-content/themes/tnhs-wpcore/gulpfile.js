@@ -19,7 +19,7 @@ const css = () => {
 }
 
 const js = () => {
-    return gulp.src('./assets/js/*.js')
+    return gulp.src('./assets/js/!(*.min)*.js')
         .pipe(minify({
             ext: {
                 src: '-debug.js',
@@ -29,13 +29,13 @@ const js = () => {
             exclude: ['tasks'],
             ignoreFiles: ['*.min.js']
         }))
-        .pipe(gulp.dest('./assets/js'))
+        .pipe(gulp.dest('./assets/scripts'))
 }
 
 exports.default = () => {
     gulp.watch([
         './assets/sass/**/*.sass',
-        './assets/js/scripts.js',
+        './assets/js/*.js',
         '*.php',
         './page-template/*.php',
         './template-parts/**/*.php',
