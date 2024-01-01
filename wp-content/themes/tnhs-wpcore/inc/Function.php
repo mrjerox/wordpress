@@ -4,7 +4,7 @@ function custom_breadcrumb()
     // Set variables for later use
     $here_text        = __( '' );
     $home_link        = home_url('/');
-    $home_text        = __( 'Home' );
+    $home_text        = __( 'Trang chủ' );
     $link_before      = '<span typeof="v:Breadcrumb">';
     $link_after       = '</span>';
     $link_attr        = ' rel="v:url" property="v:title"';
@@ -206,7 +206,7 @@ function custom_breadcrumb()
         }
     } else {
         // $breadcrumb_output_link .= $here_text . $delimiter;
-        $breadcrumb_output_link .= '<a class="text-xs font-medium uppercase text-neutral-400" href="' . $home_link . '" rel="v:url" property="v:title">' . $home_text . '</a>';
+        $breadcrumb_output_link .= '<a class="text-xs font-medium uppercase text-neutral-400" href="' . $home_link . '">' . $home_text . '</a>';
         $breadcrumb_output_link .= $delimiter;
         $breadcrumb_output_link .= $breadcrumb_trail;
         $breadcrumb_output_link .= $page_addon;

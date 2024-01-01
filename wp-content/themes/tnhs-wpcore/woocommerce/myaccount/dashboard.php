@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $allowed_html = array(
 	'a' => array(
 		'href' => array(),
+		'style' => array(),
 	),
 );
 ?>
@@ -42,10 +43,11 @@ $allowed_html = array(
 <p>
 	<?php
 	/* translators: 1: Orders URL 2: Address URL 3: Account URL. */
-	$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">billing address</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' );
+	$dashboard_desc = __( 'Từ bảng điều khiển tài khoản của mình, bạn có thể xem các <a href="%1$s" style="text-decoration: underline;">đơn đặt hàng gần đây</a>, quản lý và <a href="%3$s" style="text-decoration: underline;">chi tiết tài khoản của mình</a>.', TEXTDOMAIN);
+
 	if ( wc_shipping_enabled() ) {
 		/* translators: 1: Orders URL 2: Addresses URL 3: Account URL. */
-		$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' );
+		$dashboard_desc;
 	}
 	printf(
 		wp_kses( $dashboard_desc, $allowed_html ),

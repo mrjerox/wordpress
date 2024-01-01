@@ -13,6 +13,21 @@ class Core_Woocommerce
 
 		add_action('after_setup_theme', array("Core_Woocommerce", "core_init"));
 
+		// Remove field
+		add_filter('woocommerce_checkout_fields', array("Core_Woocommerce", "remove_woo_checkout_fields"));
+
+		// Rename download navigation table
+		add_filter("woocommerce_account_downloads_columns", array("Core_Woocommerce", "rename_my_downloads_navigation_table"));
+
+		// Rename order navigation table
+		add_filter("woocommerce_account_orders_columns", array("Core_Woocommerce", "rename_my_orders_navigation_table"));
+
+		// Rename account navigation
+		add_filter("woocommerce_account_menu_items", array("Core_Woocommerce", "rename_my_account_navigation"));
+
+		// Account enpoints
+		add_filter('woocommerce_account_menu_items', array("Core_Woocommerce", 'remove_my_account_links'));
+
 		// YITH
 		add_filter('yith_wcwl_main_style_deps', "__return_empty_array");
 
@@ -52,6 +67,91 @@ class Core_Woocommerce
 	{
 		wp_deregister_style("wc-blocks-style");
 		wp_dequeue_style("wc-blocks-style");
+	}
+
+	// Remove field
+	public static function remove_woo_checkout_fields($fields)
+	{
+
+		// remove billing fields
+		unset($fields['billing']['billing_first_name']);
+		unset($fields['billing']['billing_last_name']);
+		unset($fields['billing']['billing_company']);
+		unset($fields['billing']['billing_address_1']);
+		unset($fields['billing']['billing_address_2']);
+		unset($fields['billing']['billing_city']);
+		unset($fields['billing']['billing_postcode']);
+		unset($fields['billing']['billing_country']);
+		unset($fields['billing']['billing_state']);
+		unset($fields['billing']['billing_phone']);
+		unset($fields['billing']['billing_email']);
+
+		// remove shipping fields 
+		unset($fields['shipping']['shipping_first_name']);
+		unset($fields['shipping']['shipping_last_name']);
+		unset($fields['shipping']['shipping_company']);
+		unset($fields['shipping']['shipping_address_1']);
+		unset($fields['shipping']['shipping_address_2']);
+		unset($fields['shipping']['shipping_city']);
+		unset($fields['shipping']['shipping_postcode']);
+		unset($fields['shipping']['shipping_country']);
+		unset($fields['shipping']['shipping_state']);
+
+		// remove order comment fields
+		unset($fields['order']['order_comments']);
+
+		return $fields;
+	}
+
+	// Rename Orders list table
+	public static function rename_my_orders_navigation_table ($columns) {
+		$columns = array(
+			'order-number'  => __( 'Đơn hàng', TEXTDOMAIN ),
+			'order-date'    => __( 'Ngày đặt', TEXTDOMAIN ),
+			'order-status'  => __( 'Trạng thái', TEXTDOMAIN ),
+			'order-total'   => __( 'Tổng tiền', TEXTDOMAIN ),
+			'order-actions' => __( 'Hành động', TEXTDOMAIN ),
+		);
+
+		return $columns;
+	}
+
+	// Rename Downloads list table
+	public static function rename_my_downloads_navigation_table($columns) {
+		$columns = array(
+			'download-product'   => __('Tên sheet', TEXTDOMAIN),
+			'download-remaining' => __('Lượt tải', TEXTDOMAIN),
+			'download-expires'   => __('Thời hạn', TEXTDOMAIN),
+			'download-file'      => __('Tải về', TEXTDOMAIN),
+		);
+		return $columns;
+	}
+
+	// Rename account navigation
+	public static function rename_my_account_navigation($items)
+	{
+		$items = array(
+			'dashboard'       => __('Dashboard', TEXTDOMAIN),
+			'orders'          => __('Lịch sử đặt hàng', TEXTDOMAIN),
+			'downloads'       => __('Tải về', TEXTDOMAIN),
+			'edit-account'    => __('Thông tin tài khoản', TEXTDOMAIN),
+			'customer-logout' => __('Đăng xuất', TEXTDOMAIN),
+		);
+		return $items;
+	}
+
+	// Remove account enpoints
+	public static function remove_my_account_links($menu_links)
+	{
+		//unset( $menu_links['dashboard'] );        // Remove Dashboard
+		unset($menu_links['edit-address']);     // Addresses
+		//unset( $menu_links['payment-methods'] );  // Remove Payment Methods
+		//unset( $menu_links['orders'] );           // Remove Orders
+		//unset( $menu_links['downloads'] );        // Disable Downloads
+		//unset( $menu_links['edit-account'] );     // Remove Account details tab
+		//unset( $menu_links['customer-logout'] );  // Remove Logout link
+
+		return $menu_links;
 	}
 
 	// Add to cart

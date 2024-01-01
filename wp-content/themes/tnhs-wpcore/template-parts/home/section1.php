@@ -1,23 +1,23 @@
 <section class="box-home-sheets py-12">
 	<div class="container lg:max-w-screen-lg">
 		<div class="box-head mb-3">
-			<h2 class="title text-4xl font-semibold text-dark">Sheet Music</h2>
+			<h2 class="title text-4xl font-bold text-dark">Sheet Music</h2>
 		</div>
 		<div class="breadcrumb mb-6 text-xs font-medium uppercase">
-			<a href="#" class="text-xs font-medium uppercase text-neutral-400">Home</a> / <span class="text-xs font-medium uppercase">Sheet Music</span>
+			<a href="<?=get_home_url()?>" class="text-xs font-medium uppercase text-neutral-400"><?php _e('Trang chủ', TEXTDOMAIN);?></a> / <span class="text-xs font-medium uppercase">Sheet Music</span>
 		</div>
 		<div class="filter flex items-center justify-between mb-6">
 			<div class="filter-category cursor-pointer" id="btn-filter">
 				<i class="fa-solid fa-bars"></i>
-				<span>Filter</span>
+				<span><?php _e('Bộ lọc', TEXTDOMAIN);?></span>
 			</div>
 			<div class="filter-order text-sm">
 				<select class="p-1">
-					<option value=""><?php _e('Choose...', 'core');?></option>
-					<option value=""><?php _e('Soft by name: A -> Z', 'core');?></option>
-					<option value=""><?php _e('Soft by name: Z -> A', 'core');?></option>
-					<option value=""><?php _e('Soft by price: hight -> low', 'core');?></option>
-					<option value=""><?php _e('Soft by price: low -> hight', 'core');?></option>
+					<option value=""><?php _e('Chọn...', TEXTDOMAIN);?></option>
+					<option value=""><?php _e('Lọc theo tên: A -> Z', TEXTDOMAIN);?></option>
+					<option value=""><?php _e('Lọc theo tên: Z -> A', TEXTDOMAIN);?></option>
+					<option value=""><?php _e('Lọc theo giá: cao -> thấp', TEXTDOMAIN);?></option>
+					<option value=""><?php _e('Lọc theo giá: thấp -> cao', TEXTDOMAIN);?></option>
 				</select>
 			</div>
 		</div>

@@ -16,10 +16,12 @@
 @tailwind components
 @tailwind utilities
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap')
+// @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap')
 
 @import header
 @import keyframe
+@charset "utf-8"
 
 .overlay
     position: absolute
@@ -127,3 +129,36 @@
         position: relative
         z-index: 99
         transition: all .4s ease
+
+.woocommerce-message
+    margin-bottom: 1rem
+    font-style: italic
+
+.woocommerce-MyAccount-navigation-link
+    display: block
+    padding: .25em 0
+
+    &.is-active
+        margin-bottom: .25em
+        position: relative
+
+        &:after
+            content: ''
+            width: 50%
+            height: 1px
+            position: absolute
+            bottom: 0
+            left: 0
+            background-color: rgba(#333, 50%)
+
+table.shop_table.shop_table_responsive
+    width: 100%
+
+    thead
+        th
+            font-weight: 600
+            text-align: left
+
+    tbody
+        td
+            font-size: 14px
