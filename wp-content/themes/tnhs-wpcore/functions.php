@@ -140,10 +140,10 @@ class Core
         // Localize script
         $wp_script_data = array(
             'AJAX_URL' => ADMIN_AJAX_URL,
-            'ADD_TO_WISHLIST' => __('Đã thêm vào yêu thích', 'core'),
-            'ADD_TO_WISHLIST_EXIST' => __('Đã có trong yêu thích', 'core'),
-            'ADD_TO_CART' => __('Đã thêm vào giỏ hàng', 'core'),
-            'ADD_TO_CART_FAILED' => __('Thêm vào giỏ hàng không thành công', 'core'),
+            'ADD_TO_WISHLIST' => __('Đã thêm vào yêu thích', TEXTDOMAIN),
+            'ADD_TO_WISHLIST_EXIST' => __('Đã có trong yêu thích', TEXTDOMAIN),
+            'ADD_TO_CART' => __('Đã thêm vào giỏ hàng', TEXTDOMAIN),
+            'ADD_TO_CART_FAILED' => __('Thêm vào giỏ hàng không thành công', TEXTDOMAIN),
             'ACCOUNT_URL' => get_permalink(wc_get_page_id('myaccount')),
             'CART_URL' => wc_get_cart_url(),
         );
