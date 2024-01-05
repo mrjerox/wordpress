@@ -22,6 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="text-sm bg-black hover:bg-dark text-white font-semibold py-2 px-4 focus:outline-none focus:shadow-outline checkout-button button alt wc-forward<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>">
-	<?php _e( 'Proceed to checkout', TEXTDOMAIN ); ?>
+<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="block text-center mt-6 w-full rounded-md bg-black py-1.5 font-medium text-blue-50 hover:bg-black-500 <?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>">
+	<?php _e( 'Checkout', TEXTDOMAIN ); ?>
 </a>
