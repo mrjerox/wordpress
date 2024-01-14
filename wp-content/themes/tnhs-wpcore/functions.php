@@ -29,6 +29,7 @@ if (!defined("VERSION")) {
  */
 require_once get_template_directory() . "/inc/Function.php";
 require_once get_template_directory() . "/inc/Menu.php";
+require_once get_template_directory() . "/inc/Redirect.php";
 require_once get_template_directory() . "/inc/Woocommerce.php";
 
 /**
@@ -108,6 +109,10 @@ class Core
             "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
         );
         wp_enqueue_style(
+            "fancy-box",
+            "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+        );
+        wp_enqueue_style(
             "wpcore-style",
             get_template_directory_uri() . "/style.css",
             VERSION
@@ -128,6 +133,12 @@ class Core
         wp_enqueue_script(
             "sweet-alert",
             "https://cdn.jsdelivr.net/npm/sweetalert2@11",
+            array(),
+            false,
+        );
+        wp_enqueue_script(
+            "fancy-box",
+            "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js",
             array(),
             false,
         );

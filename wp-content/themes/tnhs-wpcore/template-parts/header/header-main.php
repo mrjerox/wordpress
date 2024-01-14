@@ -21,7 +21,7 @@
             </nav>
             <div class="box-logo basis-2/12">
                 <a href="<?=get_home_url()?>" class="block max-w-full mx-auto">
-                    <img src="<?=$general_logo?>" class="mx-auto max-w-[200px]" alt="Logo">
+                    <img src="<?=$general_logo?>" class="mx-auto max-w-[200px]" alt="nguoinghienchoidan">
                 </a>
             </div>
             <nav class="main-menu hidden lg:block --menu-right text-sm basis-5/12">
@@ -30,7 +30,7 @@
                         'menu' => 'Main menu - Right', 
                         'container'            => false,
                         'menu_class'    => "flex justify-end uppercase",
-                        'theme_location'    => "main-menu-left",
+                        'theme_location'    => "main-menu-right",
                     ));
                 ?>
             </nav>
@@ -38,7 +38,7 @@
                 <div class="overlay"></div>
                 <nav id="mobile-menu" class="mobile-menu flex flex-col justify-center items-center lg:hidden shadow-md shadow-gray-100">
                     <a href="#" class="block max-w-full mx-auto">
-                        <img src="https://doopiano.com/wp-content/uploads/2018/04/doopiano.com-logo-final-REAL.png" class="mx-auto pb-3 max-w-[200px]" alt="Logo">
+                        <img src="<?=$general_logo?>" class="mx-auto max-w-[200px]" alt="nguoinghienchoidan">
                     </a>
                     <ul>
                         <li>

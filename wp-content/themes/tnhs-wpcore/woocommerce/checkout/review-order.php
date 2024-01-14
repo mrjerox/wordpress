@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Review order table
  *
@@ -15,96 +16,108 @@
  * @version 5.2.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 ?>
-<table class="shop_table woocommerce-checkout-review-order-table">
-	<thead>
-		<tr>
-			<th class="product-name"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
-			<th class="product-total"><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
-		</tr>
-	</thead>
-	<tbody>
+
+<div class="mx-auto max-w-5xl justify-center md:flex md:space-x-6 xl:px-0">
+	<div class="rounded-lg md:w-2/3">
+		<?php do_action('woocommerce_before_cart_contents'); ?>
 		<?php
-		do_action( 'woocommerce_review_order_before_cart_contents' );
+		foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+			$_product   = apply_filters('woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key);
+			$product_id = apply_filters('woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key);
+			/**
+			 * Filter the product name.
+			 *
+			 * @since 2.1.0
+			 * @param string $product_name Name of the product in the cart.
+			 * @param array $cart_item The product in the cart.
+			 * @param string $cart_item_key Key for the product in the cart.
+			 */
+			$product_name = apply_filters('woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key);
 
-		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-			$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-
-			if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-				?>
-				<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
-					<td class="product-name">
-						<?php echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ) . '&nbsp;'; ?>
-						<?php echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity">' . sprintf( '&times;&nbsp;%s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						<?php echo wc_get_formatted_cart_item_data( $cart_item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					</td>
-					<td class="product-total">
-						<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					</td>
-				</tr>
-				<?php
-			}
-		}
-
-		do_action( 'woocommerce_review_order_after_cart_contents' );
+			if ($_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters('woocommerce_cart_item_visible', true, $cart_item, $cart_item_key)) {
+				$product_permalink = apply_filters('woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink($cart_item) : '', $cart_item, $cart_item_key);
 		?>
-	</tbody>
-	<tfoot>
+				<div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
+					<?php
+					$thumbnail = apply_filters('woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key);
 
-		<tr class="cart-subtotal">
-			<th><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
-			<td><?php wc_cart_totals_subtotal_html(); ?></td>
-		</tr>
+					if (!$product_permalink) {
+						echo $thumbnail; // PHPCS: XSS ok.
+					} else {
+						printf('<a href="%s" class="block cart-product-img">%s</a>', esc_url($product_permalink), $thumbnail); // PHPCS: XSS ok.
+					}
+					?>
+					<!-- <img src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="product-image" class="w-full rounded-lg sm:w-40" /> -->
+					<div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+						<div class="mt-5 sm:mt-0">
+							<h2 class="text-lg font-bold text-gray-900">
+								<?php
+								if (!$product_permalink) {
+									echo wp_kses_post($product_name . '&nbsp;');
+								} else {
+									/**
+									 * This filter is documented above.
+									 *
+									 * @since 2.1.0
+									 */
+									echo wp_kses_post(apply_filters('woocommerce_cart_item_name', sprintf('<a href="%s">%s</a>', esc_url($product_permalink), $_product->get_name()), $cart_item, $cart_item_key));
+								}
 
-		<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
-			<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
-				<th><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
-				<td><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
-			</tr>
-		<?php endforeach; ?>
+								do_action('woocommerce_after_cart_item_name', $cart_item, $cart_item_key);
 
-		<?php if ( WC()->cart->needs_shipping() && WC()->cart->show_shipping() ) : ?>
+								// Meta data.
+								echo wc_get_formatted_cart_item_data($cart_item); // PHPCS: XSS ok.
 
-			<?php do_action( 'woocommerce_review_order_before_shipping' ); ?>
+								// Backorder notification.
+								if ($_product->backorders_require_notification() && $_product->is_on_backorder($cart_item['quantity'])) {
+									echo wp_kses_post(apply_filters('woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__('Available on backorder', 'woocommerce') . '</p>', $product_id));
+								}
+								?>
+							</h2>
+							<p class="mt-1 text-xs text-gray-700">
+								<?php echo $_product->get_categories(); ?>
+							</p>
+						</div>
+						<div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+							<div class="flex items-center space-x-4">
+								<p class="text-sm">
+									<?php
+									echo apply_filters('woocommerce_cart_item_price', WC()->cart->get_product_price($_product), $cart_item, $cart_item_key); // PHPCS: XSS ok.
+									?>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+		<?php }
+		} ?>
+	</div>
+	<div class="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+		<div class="flex justify-between">
+			<p class="text-lg font-bold"><?php _e('Tổng tiền', TEXTDOMAIN); ?></p>
+			<div class="">
+				<p class="mb-1 text-lg font-bold"><?php wc_cart_totals_order_total_html(); ?></p>
+			</div>
+		</div>
+		<button type="button" id="btn-create-order" class="block text-center mt-6 w-full rounded-md bg-black py-1.5 font-medium text-blue-50 hover:bg-black-500">
+			<?php _e('Thanh toán', TEXTDOMAIN); ?>
+		</button>
+	</div>
+</div>
 
-			<?php wc_cart_totals_shipping_html(); ?>
-
-			<?php do_action( 'woocommerce_review_order_after_shipping' ); ?>
-
-		<?php endif; ?>
-
-		<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
-			<tr class="fee">
-				<th><?php echo esc_html( $fee->name ); ?></th>
-				<td><?php wc_cart_totals_fee_html( $fee ); ?></td>
-			</tr>
-		<?php endforeach; ?>
-
-		<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
-			<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
-				<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited ?>
-					<tr class="tax-rate tax-rate-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
-						<th><?php echo esc_html( $tax->label ); ?></th>
-						<td><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
-					</tr>
-				<?php endforeach; ?>
-			<?php else : ?>
-				<tr class="tax-total">
-					<th><?php echo esc_html( WC()->countries->tax_or_vat() ); ?></th>
-					<td><?php wc_cart_totals_taxes_total_html(); ?></td>
-				</tr>
-			<?php endif; ?>
-		<?php endif; ?>
-
-		<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
-
-		<tr class="order-total">
-			<th><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
-			<td><?php wc_cart_totals_order_total_html(); ?></td>
-		</tr>
-
-		<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
-
-	</tfoot>
-</table>
+<style>
+	#place_order {
+		display: none;
+	}
+</style>
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const btnCreateOrder = document.querySelector('#btn-create-order')
+		btnCreateOrder.addEventListener('click', (e) => {
+			e.preventDefault()
+			document.querySelector('#place_order').click()
+		})
+	})
+</script>

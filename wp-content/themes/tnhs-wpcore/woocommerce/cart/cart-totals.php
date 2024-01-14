@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 	</div> -->
 	<!-- <hr class="my-4" /> -->
 	<div class="flex justify-between">
-		<p class="text-lg font-bold"><?php esc_html_e( 'Total', 'woocommerce' ); ?></p>
+		<p class="text-lg font-bold"><?php _e('Tổng tiền', TEXTDOMAIN); ?></p>
 		<div class="">
 			<p class="mb-1 text-lg font-bold"><?php wc_cart_totals_order_total_html(); ?></p>
 		</div>

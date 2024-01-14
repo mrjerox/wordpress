@@ -167,6 +167,47 @@ table.shop_table.shop_table_responsive
     a.remove
         font-size: 24px
 
-    .cart-product-img 
-        img 
-            max-width: 100px
+.cart-product-img 
+    img 
+        max-width: 100px
+
+#customer_details,
+#order_review_heading
+    display: none
+
+.paginate-links
+    margin-top: 1.5rem
+    text-align: center
+    
+    .page-numbers
+        width: 24px
+        height: 24px
+        display: inline-flex
+        align-items: center
+        justify-content: center
+        font-size: 14px
+        border: 1px solid #333
+        border-radius: 50%
+
+        &.current
+            background-color: #333
+            color: #fff
+
+.swiper-button-next, .swiper-button-prev
+    color: #333
+    opacity: 0 !important
+    visibility: hidden
+    transition: all .4s ease
+
+.swiper-button-next:after, .swiper-button-prev:after
+    font-size: 24px
+    font-weight: 700
+
+.swiper-pagination-bullet-active
+    background: #fff
+
+.product-gallery-slide
+    &:hover
+        .swiper-button-next, .swiper-button-prev
+            opacity: 1 !important
+            visibility: visible

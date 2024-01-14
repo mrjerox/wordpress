@@ -89,7 +89,7 @@ defined('ABSPATH') || exit; ?>
 											?>
 										</h2>
 										<p class="mt-1 text-xs text-gray-700">
-										<?php echo $_product->get_categories( ', ', ' ' . _n( ' ', '  ', $cat_count, 'woocommerce' ) . ' ', ' ' );?>
+										<?php echo $_product->get_categories();?>
 										</p>
 									</div>
 									<div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">

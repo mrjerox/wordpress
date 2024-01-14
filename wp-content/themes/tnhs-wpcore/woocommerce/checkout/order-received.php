@@ -32,7 +32,7 @@ defined( 'ABSPATH' ) || exit;
 	 */
 	$message = apply_filters(
 		'woocommerce_thankyou_order_received_text',
-		__( 'Thank you. Your order has been received.', 'woocommerce' ),
+		__( 'Đơn hàng đã được đặt thành công, qúy khách vui lòng chuyển khoản với nội dung mã đơn hàng dưới đây, xin chân thành cảm ơn!', TEXTDOMAIN ),
 		$order
 	);
 
