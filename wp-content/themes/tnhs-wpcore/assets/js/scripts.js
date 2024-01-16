@@ -120,6 +120,21 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
 
+    // Handle open cart
+    const btnCart = document.querySelector('.btn-cart');
+    const cartOverlay = document.querySelector('#left-cart .overlay');
+    const cart = document.querySelector('#left-cart')
+    btnCart.addEventListener('click', (e) => {
+        e.preventDefault()
+        const target = e.currentTarget
+        cart.classList.toggle('active')
+    })
+    cartOverlay.addEventListener('click', (e) => {
+        e.preventDefault()
+        const target = e.currentTarget
+        cart.classList.toggle('active')
+    })
+
     // Handle add to cart
     const btnAddToCart = document.querySelectorAll('.btn-add')
     btnAddToCart.forEach(element => {
@@ -136,24 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await post(data)
 
             if (response.success) {
+                console.log(response.data);
                 target.classList.toggle('pending')
-
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
-
-                Toast.fire({
-                    icon: 'success',
-                    title: obj.ADD_TO_CART
-                })
+                let cartList = document.querySelector('.cart-item-list'); 
+                cartList.innerHTML = response.data
+                cart.classList.toggle('active')
                 return
             }
 

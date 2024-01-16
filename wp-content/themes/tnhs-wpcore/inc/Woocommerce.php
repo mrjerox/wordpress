@@ -168,13 +168,40 @@ class Core_Woocommerce
 		$product_status = get_post_status($product_id);
 		$in_cart = WC()->cart->find_product_in_cart($product_id);
 
-		if (in_array($product_id, array_column(WC()->cart->get_cart(), 'product_id'))) {
-			wp_send_json_success(__("Product in cart", 'core'));
-		}
+		// if (in_array($product_id, array_column(WC()->cart->get_cart(), 'product_id'))) {
+		// 	wp_send_json_success(__("Product in cart", 'core'));
+		// }
 
 		if ($passed_validation && 'publish' === $product_status) {
 			WC()->cart->add_to_cart($product_id, $quantity);
-			wp_send_json_success(__("Done", 'core'));
+			$cart_items = WC()->cart->get_cart();
+			$cart_items_html = '';
+			foreach ($cart_items as $key => $item) {
+				$product = wc_get_product($item['product_id']);
+				$images = wp_get_attachment_image_src(get_post_thumbnail_id($item['product_id'], 'full'));
+				$permalink = $product->get_permalink();
+				$title = $product->get_title();
+				$price_html = $product->get_price_html();
+				$cart_items_html .= 
+					"<div class='rounded-lg'>
+					<div class='mb-6 rounded-lg bg-white p-6 shadow-md'>
+						<a href='{$permalink}' class='block text-center cart-product-img text-center'>
+							<img src='{$images[0]}' alt='{$title}' class='block mx-auto lazy'>
+						</a>
+						<div class='block'>
+							<div class='mt-5'>
+								<h2 class='text-sm font-bold text-gray-900'>
+									<a href='{$permalink}'>{$title}</a>
+								</h2>
+								<p class='mt-1 text-xs text-gray-700'>
+									{$price_html}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>";
+			}
+			wp_send_json_success($cart_items_html);
 		}
 		wp_send_json_error(__("Failed", "core"));
 	}

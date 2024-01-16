@@ -10,7 +10,10 @@
  */
 
 ?>
-	<?php get_template_part('template-parts/footer/footer-main');?>
+	<?php 
+		get_template_part('template-parts/components/box-cart');
+		get_template_part('template-parts/footer/footer-main');
+	?>
 </div>
 
 <?php wp_footer(); ?>

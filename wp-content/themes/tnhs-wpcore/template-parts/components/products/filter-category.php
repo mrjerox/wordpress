@@ -50,7 +50,7 @@
 </section>
 
 <script>
-	window.addEventListener('DOMContentLoaded', () => {
+	document.addEventListener('DOMContentLoaded', () => {
 		const btnDropdown = document.querySelectorAll('.btn-dropdown')
 		btnDropdown.forEach((btn) => {
 			btn.addEventListener('click', (e) => {
