@@ -130,6 +130,27 @@
         z-index: 99
         transition: all .4s ease
 
+        .has-children
+            position: relative
+
+            .btn-dropdown
+                font-size: 14px
+                position: absolute
+                right: 0
+                top: 0
+                cursor: pointer
+                transition: all .4s ease
+
+                &.active
+                    transform: rotate(180deg)
+
+        .sub-menu
+            display: none
+            padding-left: 20px
+
+            &.active
+                display: block
+
 .woocommerce-message
     margin-bottom: 1rem
     font-style: italic

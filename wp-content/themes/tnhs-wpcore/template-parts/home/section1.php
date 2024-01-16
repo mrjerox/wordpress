@@ -30,10 +30,10 @@ if (is_shop()) {
 			<div class="filter-order text-sm">
 				<select class="p-1" id="select-order">
 					<option value=""><?php _e('Chọn...', TEXTDOMAIN); ?></option>
-					<option value="az" <?=$_GET['order'] === 'az' ? 'selected' : NULL?> ><?php _e('Lọc theo tên: A -> Z', TEXTDOMAIN); ?></option>
-					<option value="za" <?=$_GET['order'] === 'za' ? 'selected' : NULL?> ><?php _e('Lọc theo tên: Z -> A', TEXTDOMAIN); ?></option>
-					<option value="high" <?=$_GET['order'] === 'high' ? 'selected' : NULL?> ><?php _e('Lọc theo giá: cao -> thấp', TEXTDOMAIN); ?></option>
-					<option value="low" <?=$_GET['order'] === 'low' ? 'selected' : NULL?> ><?php _e('Lọc theo giá: thấp -> cao', TEXTDOMAIN); ?></option>
+					<option value="az" <?=isset($_GET['order']) && $_GET['order'] === 'az' ? 'selected' : NULL?> ><?php _e('Lọc theo tên: A -> Z', TEXTDOMAIN); ?></option>
+					<option value="za" <?=isset($_GET['order']) && $_GET['order'] === 'za' ? 'selected' : NULL?> ><?php _e('Lọc theo tên: Z -> A', TEXTDOMAIN); ?></option>
+					<option value="high" <?=isset($_GET['order']) && $_GET['order'] === 'high' ? 'selected' : NULL?> ><?php _e('Lọc theo giá: cao -> thấp', TEXTDOMAIN); ?></option>
+					<option value="low" <?=isset($_GET['order']) && $_GET['order'] === 'low' ? 'selected' : NULL?> ><?php _e('Lọc theo giá: thấp -> cao', TEXTDOMAIN); ?></option>
 				</select>
 			</div>
 		</div>
