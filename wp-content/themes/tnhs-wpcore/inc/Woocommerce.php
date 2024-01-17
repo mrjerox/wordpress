@@ -257,7 +257,7 @@ class Core_Woocommerce
 
 		update_user_meta($user_id, 'billing_last_name', ' ');
 		update_user_meta($user_id, 'billing_email', $email);
-		wp_send_json_success(__('Done', TEXTDOMAIN));
+		wp_send_json_success(__('Đăng ký thành công, xin chân thành cảm ơn quý khách đã sử dụng dịch vụ', TEXTDOMAIN));
 	}
 }
 

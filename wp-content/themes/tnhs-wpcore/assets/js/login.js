@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.success) {
                     target.classList.toggle('pending')
+                    document.querySelector('#register-message').innerHTML = response.data
                     return
                 }
 
