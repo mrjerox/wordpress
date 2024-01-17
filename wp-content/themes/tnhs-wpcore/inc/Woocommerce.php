@@ -32,9 +32,6 @@ class Core_Woocommerce
 		add_filter('yith_wcwl_main_style_deps', "__return_empty_array");
 
 		// Ajax handle
-		add_action("wp_ajax_test_fetch", array("Core_Woocommerce", "test_fetch"));
-		add_action("wp_ajax_nopriv_test_fetch", array("Core_Woocommerce", "test_fetch"));
-
 		add_action("wp_ajax_woocommerce_ajax_add_to_cart", array("Core_Woocommerce", "woocommerce_ajax_add_to_cart"));
 		add_action("wp_ajax_nopriv_woocommerce_ajax_add_to_cart", array("Core_Woocommerce", "woocommerce_ajax_add_to_cart"));
 
@@ -158,7 +155,7 @@ class Core_Woocommerce
 	public static function woocommerce_ajax_add_to_cart()
 	{
 		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'add_to_cart')) {
-			wp_send_json_error(__('Not valid', 'core'));
+			wp_send_json_error(__('Not valid', TEXTDOMAIN));
 			exit;
 		}
 
@@ -169,7 +166,7 @@ class Core_Woocommerce
 		$in_cart = WC()->cart->find_product_in_cart($product_id);
 
 		// if (in_array($product_id, array_column(WC()->cart->get_cart(), 'product_id'))) {
-		// 	wp_send_json_success(__("Product in cart", 'core'));
+		// 	wp_send_json_success(__("Product in cart", TEXTDOMAIN));
 		// }
 
 		if ($passed_validation && 'publish' === $product_status) {
@@ -210,7 +207,7 @@ class Core_Woocommerce
 	public static function ajax_login()
 	{
 		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'customer_login')) {
-			wp_send_json_error(__('Not valid', 'core'));
+			wp_send_json_error(__('Not valid', TEXTDOMAIN));
 			exit;
 		}
 
@@ -220,28 +217,28 @@ class Core_Woocommerce
 		$user = wp_authenticate($username, $password);
 
 		if (is_wp_error($user)) {
-			wp_send_json_error(__('Email hoặc mật khẩu không chính xác.', 'core'));
+			wp_send_json_error(__('Email hoặc mật khẩu không chính xác.', TEXTDOMAIN));
 			exit;
 		}
 
 		wp_set_current_user($user->ID);
 		wp_set_auth_cookie($user->ID);
-		wp_send_json_success(__('Đăng nhập thành công.', 'core'));
+		wp_send_json_success(__('Đăng nhập thành công.', TEXTDOMAIN));
 	}
 
 	// Register
 	public static function ajax_register_customer()
 	{
 		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'customer_register')) {
-			wp_send_json_error(__('Not valid', 'core'));
+			wp_send_json_error(__('Not valid', TEXTDOMAIN));
 			exit;
 		}
 
-		$email = $_POST['register-email'];
-		$password = $_POST['register-pass'];
+		$email = $_POST['email'];
+		$password = $_POST['password'];
 
 		if (email_exists($email)) {
-			wp_send_json_error(__('Email đã được sử dụng.', 'core'));
+			wp_send_json_error(__('Email đã được sử dụng.', TEXTDOMAIN));
 			exit;
 		}
 
@@ -254,20 +251,13 @@ class Core_Woocommerce
 		$user_id = wp_insert_user($user_data);
 
 		if (is_wp_error($user_id)) {
-			wp_send_json_error(__('Đăng ký không thành công, xin vui lòng thử lại.', 'core'));
+			wp_send_json_error(__('Đăng ký không thành công, xin vui lòng thử lại.', TEXTDOMAIN));
 			exit;
 		}
 
 		update_user_meta($user_id, 'billing_last_name', ' ');
 		update_user_meta($user_id, 'billing_email', $email);
-		wp_send_json_success(__('Done', 'core'));
-	}
-
-	public static function test_fetch()
-	{
-		$data = "Clearr";
-		$abc = $_POST['nonce'];
-		wp_send_json_success($abc);
+		wp_send_json_success(__('Done', TEXTDOMAIN));
 	}
 }
 

@@ -38,7 +38,7 @@ if (!defined('ABSPATH')) {
 						<input type="password" id="password" class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" placeholder="<?php _e('Nhập mật khẩu', 'core'); ?>">
 					</div>
 					<button type="button" id="btn-login" data-nonce="<?= wp_create_nonce('customer_login') ?>" class="btn text-sm bg-black hover:bg-dark text-white font-semibold py-2 px-4 focus:outline-none focus:shadow-outline"><?php _e('Đăng nhập', 'core'); ?></button>
-					<a class="inline-block align-baseline font-semibold text-sm text-dark hover:underline ml-4" href="#">
+					<a class="inline-block align-baseline font-semibold text-sm text-dark hover:underline ml-4" href="<?=wp_lostpassword_url()?>">
 						<?php _e('Quên mật khẩu', 'core'); ?>?
 					</a>
 					<p id="login-message" class="text-sm text-red-600 font-semibold mt-4"></p>
@@ -51,17 +51,21 @@ if (!defined('ABSPATH')) {
 				<div class="form-login">
 					<div class="form-group mb-4">
 						<label class="block text-gray-700 text-sm font-semibold mb-2" for="register-email">Email</label>
-						<input type="text" id="register-email" class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" placeholder="<?php _e('Nhập email', 'core'); ?>">
+						<input type="text" id="register-email" class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="<?php _e('Nhập email', 'core'); ?>">
+						<span class="message text-sm text-red-600"></span>
 					</div>
 					<div class="form-group mb-4">
 						<label class="block text-gray-700 text-sm font-semibold mb-2" for="register-password"><?php _e("Mật khẩu", "core"); ?></label>
-						<input type="password" id="register-password" class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" placeholder="<?php _e('Nhập mật khẩu', 'core'); ?>">
+						<input type="password" id="register-password" class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="<?php _e('Nhập mật khẩu', 'core'); ?>">
+						<span class="message text-sm text-red-600"></span>
 					</div>
 					<div class="form-group mb-4">
 						<label class="block text-gray-700 text-sm font-semibold mb-2" for="register-repassword"><?php _e(" Nhập lại mật khẩu", "core"); ?></label>
-						<input type="password" id="register-repassword" class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" placeholder="<?php _e('Nhập mật khẩu', 'core'); ?>">
+						<input type="password" id="register-repassword" class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="<?php _e('Nhập mật khẩu', 'core'); ?>">
+						<span class="message text-sm text-red-600"></span>
 					</div>
-					<button type="button" id="btn-register" class="text-sm bg-black hover:bg-dark text-white font-semibold py-2 px-4 focus:outline-none focus:shadow-outline"><?php _e('Đăng ký', 'core'); ?></button>
+					<button type="button" data-nonce="<?= wp_create_nonce('customer_register') ?>" id="btn-register" class="text-sm bg-black hover:bg-dark text-white font-semibold py-2 px-4 focus:outline-none focus:shadow-outline"><?php _e('Đăng ký', 'core'); ?></button>
+					<p id="register-message" class="text-sm text-red-600 font-semibold mt-4"></p>
 				</div>
 			</div>
 		</div>

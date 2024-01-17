@@ -41,30 +41,35 @@ document.addEventListener('DOMContentLoaded', () => {
         let data = {
             action: 'ajax_register_customer',
             nonce: target.getAttribute('data-nonce'),
-            product_id: target.getAttribute('data-product-id'),
             email: user.value,
             password: password.value,
         }
 
         if (checkRequired([user, password, repassword])) {
-            checkLength(user, 3, 15);
-            checkLength(password, 6, 25);
-            checkEmail(user);
-            checkPasswordsMatch(password, repassword);
+            let checkEmailValid = checkEmail(user);
+            let checkLengthValid = checkLength(password, 6, 25);
+            let checkPasswordValid = checkPasswordsMatch(password, repassword);
+
+            console.log("??");
+
+            console.log(checkEmailValid, checkLengthValid, checkPasswordValid);
+            
+            if (checkEmailValid && checkLengthValid && checkPasswordValid) {
+                target.classList.toggle('pending')
+                const response = await post(data)
+
+                if (response.success) {
+                    target.classList.toggle('pending')
+                    return
+                }
+
+                target.classList.toggle('pending')
+                document.querySelector('#register-message').innerHTML = response.data
+                console.log(response);
+                return
+            }
         }
 
-        target.classList.toggle('pending')
-        const response = await post(data)
-
-        if (response.success) {
-            target.classList.toggle('pending')
-            window.location.href = obj.ACCOUNT_URL
-            return
-        }
-
-        target.classList.toggle('pending')
-        document.querySelector('#login-message').innerHTML = response.data
-        console.log(response);
         return
     })
 })

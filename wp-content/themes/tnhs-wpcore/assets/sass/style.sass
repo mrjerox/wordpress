@@ -1,16 +1,16 @@
 /*!
-    Theme Name: tnhs-wpcore
-    Theme URI: https://tnhs.life/ 
-    Author: Underscores.me
-    Author URI: https://tnhs.life/
-    Description: Description
-    Version: 1.0.0
-    Requires PHP: 5.6
-    License: GNU General Public License v2 or later
-    License URI: LICENSE
-    Text Domain: core
-    Tags: wordpress, tnhs,
-    */
+ Theme Name: tnhs-wpcore
+ Theme URI: https://tnhs.life/ 
+ Author: Underscores.me
+ Author URI: https://tnhs.life/
+ Description: Description
+ Version: 1.0.0
+ Requires PHP: 5.6
+ License: GNU General Public License v2 or later
+ License URI: LICENSE
+ Text Domain: core
+ Tags: wordpress, tnhs,
+ */
 
 @tailwind base
 @tailwind components
@@ -22,6 +22,24 @@
 @import header
 @import keyframe
 @charset "utf-8"
+
+html
+    /* width */
+    &::-webkit-scrollbar
+        width: 2px
+
+    /* Track */
+    &::-webkit-scrollbar-track
+        background: #333
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb
+        background: #fff
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover
+        background: #555
+
 
 .overlay
     position: absolute
@@ -70,7 +88,7 @@
             z-index: 9
 
 .desc-body
-    ul 
+    ul
         list-style: disc
         padding-left: 20px
         margin-bottom: 1rem
@@ -118,7 +136,7 @@
             visibility: visible
             opacity: 1
 
-    .sheet-category 
+    .sheet-category
         background-color: #fff
         max-width: 260px
         height: 100%
@@ -165,6 +183,18 @@
     align-items: flex-end
     transition: all .4s ease
 
+    .cart-item-list
+        max-height: 84vh
+        overflow-y: auto
+        overflow-x: hidden
+        -ms-overflow-style: none
+        scrollbar-width: none
+        @media (max-width: 767px) 
+            max-height: 78vh
+
+        &::-webkit-scrollbar
+            display: none
+
     &.active
         visibility: visible
         opacity: 1
@@ -174,7 +204,7 @@
             visibility: visible
             opacity: 1
 
-    .left-cart 
+    .left-cart
         background-color: #fff
         width: 100%
         max-width: 260px
@@ -224,8 +254,8 @@ table.shop_table.shop_table_responsive
     a.remove
         font-size: 24px
 
-.cart-product-img 
-    img 
+.cart-product-img
+    img
         max-width: 100px
 
 #customer_details,
@@ -235,7 +265,7 @@ table.shop_table.shop_table_responsive
 .paginate-links
     margin-top: 1.5rem
     text-align: center
-    
+
     .page-numbers
         width: 24px
         height: 24px
