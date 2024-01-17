@@ -32,7 +32,7 @@ defined('ABSPATH') || exit;
 		?>
 
 		<div class="woocommerce-order flex">
-			<div class="left basis-[60%] max-w-[60%] flex-none pr-4">
+			<div class="left basis-[70%] max-w-[70%] flex-none pr-4">
 				<?php
 				if ($order) :
 
@@ -102,8 +102,8 @@ defined('ABSPATH') || exit;
 
 				<?php endif; ?>
 			</div>
-			<div class="right basis-[40%] max-w-[40%] flex-none pl-4">
-				<img src="<?=THEME_ASSETS?>/images/bank.jpg" alt="Bank">
+			<div class="right basis-[30%] max-w-[30%] flex-none pl-4">
+				<img src="<?=THEME_ASSETS?>/images/bank.png" alt="Bank">
 			</div>
 		</div>
 	</div>

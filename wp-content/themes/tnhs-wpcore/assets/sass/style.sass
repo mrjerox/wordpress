@@ -189,8 +189,7 @@ html
         overflow-x: hidden
         -ms-overflow-style: none
         scrollbar-width: none
-        @media (max-width: 767px) 
-            max-height: 78vh
+        // s
 
         &::-webkit-scrollbar
             display: none
@@ -215,7 +214,16 @@ html
         visibility: hidden
         position: relative
         z-index: 99
+        position: relative
         transition: all .4s ease
+
+        .box-button
+            position: absolute
+            left: 50%
+            bottom: 1rem
+            transform: translateX(-50%)
+            z-index: 999
+            width: calc(100% - 3rem)
 
 .woocommerce-message
     margin-bottom: 1rem
@@ -287,7 +295,7 @@ table.shop_table.shop_table_responsive
     transition: all .4s ease
 
 .swiper-button-next:after, .swiper-button-prev:after
-    font-size: 24px
+    font-size: 18px
     font-weight: 700
 
 .swiper-pagination-bullet-active
