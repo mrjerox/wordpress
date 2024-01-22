@@ -17,9 +17,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const selectFilter = document.querySelector('#select-order')
     selectFilter.addEventListener('change', (e) => {
         e.preventDefault()
-        let value = e.currentTarget.value;
+        let value = e.currentTarget.value
         let url = new URL(window.location.href)
-        url.searchParams.delete('order');
-        window.location.href = url + '?order=' + value 
+        url.searchParams.delete('order')
+        url.searchParams.append('order', value)
+        window.location.href = url 
     })
 })

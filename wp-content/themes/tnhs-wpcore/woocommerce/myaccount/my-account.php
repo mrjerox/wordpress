@@ -27,11 +27,11 @@ defined( 'ABSPATH' ) || exit;
 
 <div class="woo-account --my-account py-12">
 	<div class="container lg:max-w-screen-lg">
-		<div class="my-account flex">
-			<div class="woo-navigation flex-[20%] pr-4">
+		<div class="my-account flex flex-wrap">
+			<div class="woo-navigation flex-[100%] md:flex-[30%] lg:flex-[20%] md:pr-4">
 				<?php do_action( 'woocommerce_account_navigation' );?>
 			</div>
-			<div class="woocommerce-MyAccount-content flex-[80%] pl-4">
+			<div class="woocommerce-MyAccount-content flex-[100%] md:flex-[70%] lg:flex-[80%] md:pl-4 mt-6 md:mt-0">
 				<?php
 					/**
 					 * My Account content.

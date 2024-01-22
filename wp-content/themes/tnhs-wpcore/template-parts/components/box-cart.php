@@ -11,7 +11,8 @@
 				$images = wp_get_attachment_image_src(get_post_thumbnail_id($item['product_id'], 'full'));
 			?>
 			<div class="rounded-lg">
-				<div class="mb-6 rounded-lg bg-white p-6 shadow-md">
+				<div class="mb-6 rounded-lg bg-white p-6 shadow-md relative">
+					<button class="btn-remove-item absolute top-[0] right-[0] text-xs" data-id="<?=$item['product_id']?>" data-nonce="<?= wp_create_nonce('remove_cart_item')?>"><i class="fa-solid fa-xmark"></i></button>
 					<a href="<?=$product->get_permalink()?>" class="block text-center cart-product-img text-center">
 						<img src="<?=$images[0] ?>" alt="<?=$product->get_title()?>" class="block mx-auto lazy">
 					</a>

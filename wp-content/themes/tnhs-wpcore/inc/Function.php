@@ -220,18 +220,10 @@ function wp_paginate_paged($custom_query = null, $paged = null)
         'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
         'format' => '?paged=%#%',
         'current' => max(1, $paged),
-        'total' => $total,
-        'mid_size' => '10',
+        'total' => ceil($total),
+        'mid_size' => 2,
         'prev_text'    => '<',
         'next_text'    => '>',
     ));
     if ($total > 1) echo '</div>';
 }
-
-// Woo
-function modify_product_cat_query( $query ) {
-    if (!is_admin() && $query->is_tax("product_cat")){
-         $query->set('posts_per_page', 12);
-    }
-  }
-  add_action( 'pre_get_posts', 'modify_product_cat_query' );

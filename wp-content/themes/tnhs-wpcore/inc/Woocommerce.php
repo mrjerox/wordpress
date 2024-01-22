@@ -35,6 +35,9 @@ class Core_Woocommerce
 		add_action("wp_ajax_woocommerce_ajax_add_to_cart", array("Core_Woocommerce", "woocommerce_ajax_add_to_cart"));
 		add_action("wp_ajax_nopriv_woocommerce_ajax_add_to_cart", array("Core_Woocommerce", "woocommerce_ajax_add_to_cart"));
 
+		add_action("wp_ajax_woocommerce_ajax_remove_item_in_cart", array("Core_Woocommerce", "woocommerce_ajax_remove_item_in_cart"));
+		add_action("wp_ajax_nopriv_woocommerce_ajax_remove_item_in_cart", array("Core_Woocommerce", "woocommerce_ajax_remove_item_in_cart"));
+
 		add_action("wp_ajax_ajax_login", array("Core_Woocommerce", "ajax_login"));
 		add_action("wp_ajax_nopriv_ajax_login", array("Core_Woocommerce", "ajax_login"));
 
@@ -164,23 +167,56 @@ class Core_Woocommerce
 		$passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity);
 		$product_status = get_post_status($product_id);
 		$in_cart = WC()->cart->find_product_in_cart($product_id);
+		$cart_items = WC()->cart->get_cart();
 
-		// if (in_array($product_id, array_column(WC()->cart->get_cart(), 'product_id'))) {
-		// 	wp_send_json_success(__("Product in cart", TEXTDOMAIN));
-		// }
-
-		if ($passed_validation && 'publish' === $product_status) {
-			WC()->cart->add_to_cart($product_id, $quantity);
-			$cart_items = WC()->cart->get_cart();
+		if (in_array($product_id, array_column(WC()->cart->get_cart(), 'product_id'))) {
 			$cart_items_html = '';
 			foreach ($cart_items as $key => $item) {
-				$product = wc_get_product($item['product_id']);
+				$product_id = $item['product_id'];
+				$nonce = wp_create_nonce('remove_cart_item');
+				$product = wc_get_product($product_id);
 				$images = wp_get_attachment_image_src(get_post_thumbnail_id($item['product_id'], 'full'));
 				$permalink = $product->get_permalink();
 				$title = $product->get_title();
 				$price_html = $product->get_price_html();
 				$cart_items_html .= 
-					"<div class='rounded-lg'>
+					"<div class='rounded-lg relative'>
+					<button class='btn-remove-item absolute top-[0] right-[0] text-xs' data-id='{$product_id}' data-nonce='{$nonce}'><i class='fa-solid fa-xmark'></i></button>
+					<div class='mb-6 rounded-lg bg-white p-6 shadow-md'>
+						<a href='{$permalink}' class='block text-center cart-product-img text-center'>
+							<img src='{$images[0]}' alt='{$title}' class='block mx-auto lazy'>
+						</a>
+						<div class='block'>
+							<div class='mt-5'>
+								<h2 class='text-sm font-bold text-gray-900'>
+									<a href='{$permalink}'>{$title}</a>
+								</h2>
+								<p class='mt-1 text-xs text-gray-700'>
+									{$price_html}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>";
+			}
+			wp_send_json_success($cart_items_html);
+		}
+
+		if ($passed_validation && 'publish' === $product_status) {
+			WC()->cart->add_to_cart($product_id, $quantity);
+			$cart_items_html = '';
+			$cart_items = WC()->cart->get_cart();
+			foreach ($cart_items as $key => $item) {
+				$product_id = $item['product_id'];
+				$nonce = wp_create_nonce('remove_cart_item');
+				$product = wc_get_product($product_id);
+				$images = wp_get_attachment_image_src(get_post_thumbnail_id($item['product_id'], 'full'));
+				$permalink = $product->get_permalink();
+				$title = $product->get_title();
+				$price_html = $product->get_price_html();
+				$cart_items_html .= 
+					"<div class='rounded-lg relative'>
+					<button class='btn-remove-item absolute top-[0] right-[0] text-xs' data-id='{$product_id}' data-nonce='{$nonce}'><i class='fa-solid fa-xmark'></i></button>
 					<div class='mb-6 rounded-lg bg-white p-6 shadow-md'>
 						<a href='{$permalink}' class='block text-center cart-product-img text-center'>
 							<img src='{$images[0]}' alt='{$title}' class='block mx-auto lazy'>
@@ -201,6 +237,56 @@ class Core_Woocommerce
 			wp_send_json_success($cart_items_html);
 		}
 		wp_send_json_error(__("Failed", "core"));
+	}
+
+	// Remove item cart
+	public static function woocommerce_ajax_remove_item_in_cart()
+	{
+		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'remove_cart_item')) {
+			wp_send_json_error(__('Not valid', TEXTDOMAIN));
+			exit;
+		}
+
+		$product_id = absint($_POST['product_id']);
+		$cart_items = WC()->cart->get_cart();
+
+		foreach ($cart_items as $key => $item) {
+			if($item['product_id'] === $product_id){
+                WC()->cart->remove_cart_item($key);                   
+				unset($cart_items[$key]);
+            }
+		}
+		$cart_items_html = '';
+
+		foreach ($cart_items as $key => $item) {
+			$product_id = $item['product_id'];
+			$nonce = wp_create_nonce('remove_cart_item');
+			$product = wc_get_product($product_id);
+			$images = wp_get_attachment_image_src(get_post_thumbnail_id($item['product_id'], 'full'));
+			$permalink = $product->get_permalink();
+			$title = $product->get_title();
+			$price_html = $product->get_price_html();
+			$cart_items_html .= 
+				"<div class='rounded-lg relative'>
+				<button class='btn-remove-item absolute top-[0] right-[0] text-xs' data-id='{$product_id}' data-nonce='{$nonce}'><i class='fa-solid fa-xmark'></i></button>
+				<div class='mb-6 rounded-lg bg-white p-6 shadow-md'>
+					<a href='{$permalink}' class='block text-center cart-product-img text-center'>
+						<img src='{$images[0]}' alt='{$title}' class='block mx-auto lazy'>
+					</a>
+					<div class='block'>
+						<div class='mt-5'>
+							<h2 class='text-sm font-bold text-gray-900'>
+								<a href='{$permalink}'>{$title}</a>
+							</h2>
+							<p class='mt-1 text-xs text-gray-700'>
+								{$price_html}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>";
+		}
+		wp_send_json_success($cart_items_html);
 	}
 
 	// Login 

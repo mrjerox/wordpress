@@ -31,8 +31,8 @@ defined('ABSPATH') || exit;
 		}
 		?>
 
-		<div class="woocommerce-order flex">
-			<div class="left basis-[70%] max-w-[70%] flex-none pr-4">
+		<div class="woocommerce-order flex flex-wrap">
+			<div class="left basis-[100%] max-w-[100%] md:basis-[70%] md:max-w-[70%] flex-none md:pr-4">
 				<?php
 				if ($order) :
 
@@ -58,7 +58,7 @@ defined('ABSPATH') || exit;
 
 							<li class="woocommerce-order-overview__order order">
 								<?php _e('Mã đơn: ', TEXTDOMAIN); ?>
-								<strong><?php echo 'nncd#' . $order->get_order_number(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+								<strong><?php echo 'nncd' . $order->get_order_number(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 										?></strong>
 							</li>
 
@@ -102,8 +102,9 @@ defined('ABSPATH') || exit;
 
 				<?php endif; ?>
 			</div>
-			<div class="right basis-[30%] max-w-[30%] flex-none pl-4">
-				<img src="<?=THEME_ASSETS?>/images/bank.png" alt="Bank">
+			<div class="right basis-[100%] max-w-[100%] md:basis-[30%] md:max-w-[30%] flex-none md:pl-4 mt-6 md:mt-0">
+				<img src="<?=THEME_ASSETS?>/images/bank.png" alt="Nguyễn Việt Tiến Momo">
+				<img src="<?=THEME_ASSETS?>/images/bank2.jpeg" alt="Nguyễn Việt Tiến Techcombank">
 			</div>
 		</div>
 	</div>

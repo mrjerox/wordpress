@@ -2,7 +2,7 @@
     $general_logo = get_field('general_logo', 'option') ? get_field('general_logo', 'option') : THEME_ASSETS . '/images/logo.png';
 ?>
 
-<div class="hidden px-2 py-3"></div>
+<div class="hidden px-2 py-3 block p-2 text-sm absolute relative top-[0] right-[0] text-xs"></div>
 <header class="site-header shadow-md shadow-gray-100">
     <div class="container max-w-full">
         <div class="flex justify-between items-center py-4">
@@ -21,7 +21,7 @@
             </nav>
             <div class="box-logo basis-2/12">
                 <a href="<?=get_home_url()?>" class="block max-w-full mx-auto">
-                    <img src="<?=$general_logo?>" class="mx-auto max-w-[200px]" alt="nguoinghienchoidan">
+                    <img src="<?=$general_logo?>" class="mx-auto max-w-[270px]" alt="nguoinghienchoidan">
                 </a>
             </div>
             <nav class="main-menu hidden lg:block --menu-right text-sm basis-5/12">
@@ -40,26 +40,14 @@
                     <a href="#" class="block max-w-full mx-auto">
                         <img src="<?=$general_logo?>" class="mx-auto max-w-[200px]" alt="nguoinghienchoidan">
                     </a>
-                    <ul>
-                        <li>
-                            <a href="#" class="block p-2 text-sm">Sheet Music</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block p-2 text-sm">Contact</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block p-2 text-sm">FAQ</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block p-2 text-sm">My Account</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block p-2 text-sm">
-                                Cart
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </li>
-                    </ul>
+                    <?php
+                        wp_nav_menu(array(
+                            'menu' => 'Main menu mobile', 
+                            'container'            => false,
+                            'menu_class'    => "",
+                            'theme_location'    => "main-menu-mobile",
+                        ));
+                    ?>
                 </nav>
             </div>
             <div class="btn-menu cursor-pointer lg:hidden" id="btn-menu">
@@ -67,9 +55,9 @@
             </div>
             <div class="box-search" id="search">
                 <div class="overlay"></div>
-                <form action="">
-                    <input type="text" placeholder="<?php _e('Search...', 'core');?>">
-                    <button type="button">
+                <form action="<?=get_home_url()?>">
+                    <input type="text" name="s" placeholder="<?php _e('Search...', 'core');?>">
+                    <button type="submit">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </form>

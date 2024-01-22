@@ -30,8 +30,8 @@ $product = wc_get_product($id);
 
 <section class="box-product-detail py-12">
 	<div class="container lg:max-w-screen-lg">
-		<div class="flex">
-			<div class="basis-1/2 max-w-[50%] flex-none pr-4">
+		<div class="flex flex-wrap">
+			<div class="basis-1/1 max-w-[100%] md:basis-1/2 md:max-w-[50%] flex-none md:pr-4">
 				<?php
 				$attachment_ids = $product->get_gallery_image_ids();
 
@@ -56,7 +56,7 @@ $product = wc_get_product($id);
 					</div>
 				<?php } ?>
 			</div>
-			<div class="basis-1/2 max-w-[50%] flex-none pl-4">
+			<div class="basis-1/1 max-w-[100%] md:basis-1/2 md:max-w-[50%] flex-none md:pl-4 mt-6 md:mt-0">
 				<?php
 				if (function_exists('custom_breadcrumb')) {
 					echo custom_breadcrumb();
@@ -168,12 +168,22 @@ $product = wc_get_product($id);
 		});
 
 		let relatedProductSlide = new Swiper(".related-product-slide", {
-			slidesPerView: 4,
-			spaceBetween: 16,
+			slidesPerView: 2,
+			spaceBetween: 8,
 			speed: 800,
 			autoplay: {
 				delay: 5000,
 			},
+			breakpoints: {
+				768: {
+					slidesPerView: 3,
+					spaceBetween: 16,
+				},
+				1024: {
+					slidesPerView: 4,
+					spaceBetween: 16,
+				}
+			}
 		});
 
 		Fancybox.bind('[data-fancybox="gallery"]', {

@@ -40,55 +40,59 @@ if ($show_downloads) {
 	);
 }
 ?>
-<section class="woocommerce-order-details">
-	<?php do_action('woocommerce_order_details_before_order_table', $order); ?>
 
-	<?php
-	do_action('woocommerce_order_details_before_order_table_items', $order);
+<?php if ( is_wc_endpoint_url( 'order-received' ) ) { ?>
+	<section class="woocommerce-order-details">
+		<?php do_action('woocommerce_order_details_before_order_table', $order); ?>
 
-	foreach ($order_items as $item_id => $item) {
-		$product = $item->get_product();
-	} ?>
+		<?php
+		do_action('woocommerce_order_details_before_order_table_items', $order);
 
-	<div class="mt-6 w-full justify-center md:flex md:space-x-6 xl:px-0">
-		<div class="rounded-lg w-full">
-			<?php do_action('woocommerce_before_cart_contents'); ?>
-			<?php
-			foreach ($order_items as $item_id => $item) {
-				$product = $item->get_product();
-			?>
-				<div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-					<div class="cart-product-img">
-						<?= $thumbnail = $product->get_image(); ?>
-					</div>
-					<div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-						<div class="mt-5 sm:mt-0">
-							<h2 class="text-lg font-bold text-gray-900">
-								<?= $product->get_title(); ?>
-							</h2>
-							<p class="mt-1 text-xs text-gray-700">
-								<?php echo $product->get_categories(); ?>
-							</p>
+		foreach ($order_items as $item_id => $item) {
+			$product = $item->get_product();
+		} ?>
+
+		<div class="mt-6 w-full justify-center md:flex md:space-x-6 xl:px-0">
+			<div class="rounded-lg w-full">
+				<?php do_action('woocommerce_before_cart_contents'); ?>
+				<?php
+				foreach ($order_items as $item_id => $item) {
+					$product = $item->get_product();
+				?>
+					<div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
+						<div class="cart-product-img">
+							<?= $thumbnail = $product->get_image(); ?>
+						</div>
+						<div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+							<div class="mt-5 sm:mt-0">
+								<a href="<?=$product->get_permalink()?>">
+									<h2 class="text-lg font-bold text-gray-900">
+										<?= $product->get_title(); ?>
+									</h2>
+								</a>
+								<p class="mt-1 text-xs text-gray-700">
+									<?php echo $product->get_categories(); ?>
+								</p>
+							</div>
+						</div>
+						<div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+							<div class="flex items-center space-x-4">
+								<p class="text-sm">
+									<?=$product->get_price_html()?>
+								</p>
+							</div>
 						</div>
 					</div>
-					<div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-						<div class="flex items-center space-x-4">
-							<p class="text-sm">
-								<?=$product->get_price_html()?>
-							</p>
-						</div>
-					</div>
-				</div>
-			<?php } ?>
+				<?php } ?>
+			</div>
 		</div>
-	</div>
 
-	<?php do_action('woocommerce_order_details_after_order_table_items', $order);
-	?>
+		<?php do_action('woocommerce_order_details_after_order_table_items', $order);
+		?>
 
-	<?php do_action('woocommerce_order_details_after_order_table', $order); ?>
-</section>
-
+		<?php do_action('woocommerce_order_details_after_order_table', $order); ?>
+	</section>
+<?}?>
 <?php
 /**
  * Action hook fired after the order details.

@@ -22,11 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lazyloading 
     const lazyLoadInstance = new LazyLoad({
         // Your custom settings go here
-    });
+    })
 
     // Menu
     const btnMenu = document.querySelector('#btn-menu')
     const boxMobileMenu = document.querySelector('#box-mobile-menu')
+    const boxMobileMenuItems = document.querySelectorAll('#box-mobile-menu ul li')
     const mobileMenuOverlay = document.querySelector('#box-mobile-menu .overlay')
     const mobileMenu = document.querySelector('#mobile-menu')
     const page = document.querySelector('#page')
@@ -44,6 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileMenu.classList.toggle('active')
         page.classList.toggle('disable')
     })
+
+    boxMobileMenuItems.forEach((item) => {
+        item.addEventListener('click', (e) => {
+            boxMobileMenu.classList.toggle('active')
+            mobileMenu.classList.toggle('active')
+            page.classList.toggle('disable')
+        })
+    })
+
 
     // Search
     const btnSearch = document.querySelector('#btn-search')
@@ -121,13 +131,15 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // Handle open cart
-    const btnCart = document.querySelector('.btn-cart');
-    const cartOverlay = document.querySelector('#left-cart .overlay');
+    const btnCart = document.querySelectorAll('.btn-cart')
+    const cartOverlay = document.querySelector('#left-cart .overlay')
     const cart = document.querySelector('#left-cart')
-    btnCart.addEventListener('click', (e) => {
-        e.preventDefault()
-        const target = e.currentTarget
-        cart.classList.toggle('active')
+    btnCart.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault()
+            const target = e.currentTarget
+            cart.classList.toggle('active')
+        })
     })
     cartOverlay.addEventListener('click', (e) => {
         e.preventDefault()
@@ -151,9 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await post(data)
 
             if (response.success) {
-                console.log(response.data);
                 target.classList.toggle('pending')
-                let cartList = document.querySelector('.cart-item-list'); 
+                let cartList = document.querySelector('.cart-item-list')
                 cartList.innerHTML = response.data
                 cart.classList.toggle('active')
                 return
@@ -178,6 +189,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: obj.ADD_TO_CART_FAILED
             })
             return
+        })
+    })
+
+    // Handle remove item in cart
+    const leftCart = document.querySelector('.left-cart')
+    // leftCart.classList.toggle('--pending')
+
+    document.addEventListener('click', (e) => {
+        let target = e.target
+        let btnRemoveItems = document.querySelectorAll('.btn-remove-item')
+        btnRemoveItems.forEach( async (item) => {
+            if (item.contains(target)) {
+                e.preventDefault()
+                leftCart.classList.toggle('--pending')
+    
+                let itemTarget = target
+                let nonce = itemTarget.getAttribute('data-nonce')
+                let productId = itemTarget.getAttribute('data-id')
+                let data = {
+                    action: 'woocommerce_ajax_remove_item_in_cart',
+                    nonce: nonce,
+                    product_id: productId,
+                }
+    
+                const response = await post(data)
+    
+                if (response.success) {
+                    let cartList = document.querySelector('.cart-item-list')
+                    cartList.innerHTML = response.data
+                    leftCart.classList.toggle('--pending')
+                    return
+                }
+    
+                // Failed
+                leftCart.classList.toggle('--pending')
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+            }
         })
     })
 

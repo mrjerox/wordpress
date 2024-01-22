@@ -61,7 +61,11 @@ if ( ! defined( 'YITH_WCWL' ) ) {
 			$product = $item->get_product();
 
 			if ( $product && $product->exists() ) : 
-                get_template_part('template-parts/components/products/sheet-item', '', array('id' => $item->get_product_id()))
+                get_template_part('template-parts/components/products/sheet-item', '', array(
+					'id' => $item->get_product_id(),
+					'remove_url' => $item->get_remove_url()
+				)
+			)
             ?>
 				<?php
 			endif;
