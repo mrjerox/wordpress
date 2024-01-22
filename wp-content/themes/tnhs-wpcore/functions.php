@@ -197,9 +197,13 @@ class Core
      * Edit global query
     */
     public function modify_global_query( $query ) {
-        if (!is_admin() && $query->is_tax("product_cat") || is_shop()){
+        if (!is_admin() && $query->is_tax("product_cat")){
              $query->set('posts_per_page', 12);
         }
+
+        if (!is_admin() && is_shop()){
+            $query->set('posts_per_page', 12);
+       }
     }
 }
 

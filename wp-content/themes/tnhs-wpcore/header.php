@@ -66,12 +66,12 @@ if (is_paged()) {
 <meta charset="<?php bloginfo('charset'); ?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="<?php echo str_replace('"', '', $_siteInfo['author']); ?>" />
-    <meta name="description" content="<?php echo str_replace('"', '', $_siteInfo['description']); ?>" />
-    <meta property="og:type" content='<?php echo $_siteInfo['type']; ?>' />
-    <meta property="og:title" content="<?php echo str_replace('"', '', $_siteInfo['title']); ?>" />
-    <meta property="og:url" content="<?php echo $_siteInfo['url']; ?>" />
+    <!-- <meta name="description" content="<?php echo str_replace('"', '', $_siteInfo['description']); ?>" /> -->
+    <!-- <meta property="og:type" content='<?php echo $_siteInfo['type']; ?>' /> -->
+    <!-- <meta property="og:title" content="<?php echo str_replace('"', '', $_siteInfo['title']); ?>" /> -->
+    <!-- <meta property="og:url" content="<?php echo $_siteInfo['url']; ?>" /> -->
     <meta property="og:image" content="<?php echo $_siteInfo['image']; ?>" />
-    <meta property="og:description" content="<?php echo str_replace('"', '', $_siteInfo['description']); ?>" />
+    <!-- <meta property="og:description" content="<?php echo str_replace('"', '', $_siteInfo['description']); ?>" /> -->
     <meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
     <link rel="profile" href="https://gmpg.org/xfn/11" />
     <link type="image/x-icon" rel="shortcut icon" href="<?php echo FAVICON; ?>">
