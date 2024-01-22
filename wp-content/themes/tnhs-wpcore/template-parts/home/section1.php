@@ -24,7 +24,11 @@ if (is_search()) {
 			<h2 class="title text-4xl font-bold text-dark"><?= $page_name ?></h2>
 		</div>
 		<div class="breadcrumb mb-6 text-xs font-medium uppercase">
-			<a href="<?= get_home_url() ?>" class="text-xs font-medium uppercase text-neutral-400"><?php _e('Trang chủ', TEXTDOMAIN); ?></a> / <span class="text-xs font-medium uppercase"><?= $page_name ?></span>
+			<ol class="flex items-center flex-wrap">
+				<li><a href="<?= get_home_url() ?>" class="text-xs font-medium uppercase text-neutral-400"><?php _e('Trang chủ', TEXTDOMAIN); ?></a></li>
+				&nbsp;/&nbsp;
+				<li><span class="text-xs font-medium uppercase"><?= $page_name ?></span></li>
+			</ol>
 			<p class="mt-4">Trang web đang trong quá trình update hình ảnh, tuy nhiên bạn vẫn có thể mua và tải xuống sheet nhạc</p>
 		</div>
 		<?php if (is_product_category() || is_shop()  || is_search()) {?>
