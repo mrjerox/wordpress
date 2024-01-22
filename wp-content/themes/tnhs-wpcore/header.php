@@ -54,8 +54,8 @@ if (is_single() || is_page()) {
 }
 
 if (is_paged()) {
-    $_siteInfo['title'] .= ' | ' . __('Page', 'corex') . ' ' . get_query_var('paged');
-    $_siteInfo['description'] .= ' | ' . __('Page', 'corex') . ' ' . get_query_var('paged');
+    $_siteInfo['title'] .= ' | ' . __('Page', TEXTDOMAIN) . ' ' . get_query_var('paged');
+    $_siteInfo['description'] .= ' | ' . __('Page', TEXTDOMAIN) . ' ' . get_query_var('paged');
 }
 
 ?>

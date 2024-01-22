@@ -3,13 +3,13 @@
 	$product = wc_get_product($id);
 	$title = !empty($args['id']) ? get_the_title($id) : get_the_title();
 	$permalink = !empty($args['id']) ? get_the_permalink($id) : get_the_permalink();
-	$img_url = get_the_post_thumbnail_url($id, 'full') ? get_the_post_thumbnail_url($id, 'full') : 'https://picsum.photos/500';
-	$remove_url = $args['remove_url'] ? $args['remove_url'] : false; 
+	$img_url = get_the_post_thumbnail_url($id, 'full') ? get_the_post_thumbnail_url($id, 'full') : THEME_ASSETS . '/images/woocommerce-placeholder-300x300.png';
+	$remove_url = $args['remove_url'] ? $args['remove_url'] : false;
 ?>
 
 <div class="sheet-item <?=$remove_url ? '--wishlist-item' : NULL?>">
 	<a href="<?=esc_url($permalink)?>" class="sheet-img block">
-		<img width="224" height="224" data-src="<?=esc_url($img_url)?>" class="aspect-square object-cover lazy" alt="<?=esc_html($title)?>">
+		<img fetchpriority="high" width="224" height="224" data-src="<?=esc_url($img_url)?>" class="aspect-square object-cover lazy w-full" alt="<?=esc_html($title)?>" src="<?=THEME_ASSETS . '/images/woocommerce-placeholder-300x300.png'?>" sizes="(max-width: 767px) 182px">
 	</a>
 	<?php if ($remove_url) { ?>
 		<a href="<?=$remove_url?>" class="btn-remove-wishlist"><i class="fa-solid fa-xmark"></i></a>

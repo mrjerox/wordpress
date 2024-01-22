@@ -58,7 +58,7 @@ if (!defined('ABSPATH')) {
 			<div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
 				<div class="flex items-center space-x-4">
 					<a href="<?=$download['download_url']?>" class="text-sm whitespace-nowrap">
-						<?php _e('Tải xuống', 'corex'); ?>
+						<?php _e('Tải xuống', TEXTDOMAIN); ?>
 					</a>
 				</div>
 			</div>
