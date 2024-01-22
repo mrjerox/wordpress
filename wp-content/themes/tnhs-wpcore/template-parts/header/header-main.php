@@ -21,7 +21,7 @@
             </nav>
             <div class="box-logo basis-2/12">
                 <a href="<?=get_home_url()?>" class="block max-w-full mx-auto">
-                    <img src="<?=$general_logo?>" class="mx-auto max-w-[270px]" alt="nguoinghienchoidan">
+                    <img width="270" height="40" src="<?=$general_logo?>" class="mx-auto max-w-[270px]" alt="nguoinghienchoidan">
                 </a>
             </div>
             <nav class="main-menu hidden lg:block --menu-right text-sm basis-5/12">
@@ -38,7 +38,7 @@
                 <div class="overlay"></div>
                 <nav id="mobile-menu" class="mobile-menu flex flex-col justify-center items-center lg:hidden shadow-md shadow-gray-100">
                     <a href="#" class="block max-w-full mx-auto">
-                        <img src="<?=$general_logo?>" class="mx-auto max-w-[200px]" alt="nguoinghienchoidan">
+                        <img width="270" height="40" src="<?=$general_logo?>" class="mx-auto max-w-[200px]" alt="nguoinghienchoidan">
                     </a>
                     <?php
                         wp_nav_menu(array(

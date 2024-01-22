@@ -105,6 +105,7 @@ defined('ABSPATH') || exit;
 			<div class="right basis-[100%] max-w-[100%] md:basis-[30%] md:max-w-[30%] flex-none md:pl-4 mt-6 md:mt-0">
 				<img src="<?=THEME_ASSETS?>/images/bank.png" alt="Nguyễn Việt Tiến Momo">
 				<img src="<?=THEME_ASSETS?>/images/bank2.jpeg" alt="Nguyễn Việt Tiến Techcombank">
+				<a href="https://www.paypal.com/paypalme/viettien269" target="_blank" class="flex items-center font-semibold text-sm mt-6"><i class="fa-brands fa-cc-paypal mr-2" style="font-size: 30px;"></i>Paypal</a>
 			</div>
 		</div>
 	</div>

@@ -9,7 +9,7 @@
 
 <div class="sheet-item <?=$remove_url ? '--wishlist-item' : NULL?>">
 	<a href="<?=esc_url($permalink)?>" class="sheet-img block">
-		<img data-src="<?=esc_url($img_url)?>" class="aspect-square object-cover lazy" alt="<?=esc_html($title)?>">
+		<img width="224" height="224" data-src="<?=esc_url($img_url)?>" class="aspect-square object-cover lazy" alt="<?=esc_html($title)?>">
 	</a>
 	<?php if ($remove_url) { ?>
 		<a href="<?=$remove_url?>" class="btn-remove-wishlist"><i class="fa-solid fa-xmark"></i></a>

