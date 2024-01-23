@@ -25,8 +25,7 @@ if (is_search()) {
 		</div>
 		<div class="breadcrumb mb-6 text-xs font-medium uppercase">
 			<ol class="flex items-center flex-wrap">
-				<li><a href="<?= get_home_url() ?>" class="text-xs font-medium uppercase text-neutral-400"><?php _e('Trang chủ', TEXTDOMAIN); ?></a></li>
-				&nbsp;/&nbsp;
+				<li><a href="<?= get_home_url() ?>" class="text-xs font-medium uppercase text-neutral-400"><?php _e('Trang chủ', TEXTDOMAIN); ?></a><span> /&nbsp;</span></li>
 				<li><span class="text-xs font-medium uppercase"><?= $page_name ?></span></li>
 			</ol>
 			<p class="mt-4">Trang web đang trong quá trình update hình ảnh, tuy nhiên bạn vẫn có thể mua và tải xuống sheet nhạc</p>

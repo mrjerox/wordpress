@@ -6,10 +6,10 @@ function custom_breadcrumb()
     $home_link        = home_url('/');
     $home_text        = __('Trang chủ');
     $link_before      = '<li>';
-    $link_after       = '</li>';
+    $link_after       = '<span> /&nbsp;</span></li>';
     $link_attr        = '';
     $link             = $link_before . '<a' . $link_attr . ' href="%1$s">%2$s</a>' . $link_after;
-    $delimiter        = '&nbsp;/&nbsp;';              // Delimiter between crumbs
+    $delimiter        = '';              // Delimiter between crumbs
     $before           = '<li class="current">'; // Tag before the current crumb
     $after            = '</li>';                // Tag after the current crumb
     $page_addon       = '';                       // Adds the page number if the query is paged
@@ -191,12 +191,12 @@ function custom_breadcrumb()
         // Do not show breadcrumbs on page one of home and frontpage
         if (is_paged()) {
             // $breadcrumb_output_link .= $here_text . $delimiter;
-            $breadcrumb_output_link .= '<li><a class="text-xs font-medium uppercase text-neutral-400" href="' . $home_link . '">' . $home_text . '</a></li>';
+            $breadcrumb_output_link .= '<li><a class="text-xs font-medium uppercase text-neutral-400" href="' . $home_link . '">' . $home_text . '</a><span class="text-dark"> /&nbsp;</span></li>';
             $breadcrumb_output_link .= $page_addon;
         }
     } else {
         // $breadcrumb_output_link .= $here_text . $delimiter;
-        $breadcrumb_output_link .= '<li><a class="text-xs font-medium uppercase text-neutral-400" href="' . $home_link . '">' . $home_text . '</a></li>';
+        $breadcrumb_output_link .= '<li><a class="text-xs font-medium uppercase text-neutral-400" href="' . $home_link . '">' . $home_text . '</a><span class="text-dark"> /&nbsp;</span></li>';
         $breadcrumb_output_link .= $delimiter;
         $breadcrumb_output_link .= $breadcrumb_trail;
         $breadcrumb_output_link .= $page_addon;
