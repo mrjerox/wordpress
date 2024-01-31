@@ -21,14 +21,13 @@ if (is_search()) {
 <section class="box-home-sheets py-12">
 	<div class="container lg:max-w-screen-lg">
 		<div class="box-head mb-3">
-			<h2 class="title text-4xl font-bold text-dark"><?= $page_name ?></h2>
+			<h1 class="title text-4xl font-bold text-dark"><?= $page_name ?></h1>
 		</div>
 		<div class="breadcrumb mb-6 text-xs font-medium uppercase">
 			<ol class="flex items-center flex-wrap">
 				<li><a href="<?= get_home_url() ?>" class="text-xs font-medium uppercase text-neutral-400"><?php _e('Trang chủ', TEXTDOMAIN); ?></a><span> /&nbsp;</span></li>
 				<li><span class="text-xs font-medium uppercase"><?= $page_name ?></span></li>
 			</ol>
-			<p class="mt-4">Trang web đang trong quá trình update hình ảnh, tuy nhiên bạn vẫn có thể mua và tải xuống sheet nhạc</p>
 		</div>
 		<?php if (is_product_category() || is_shop()  || is_search()) {?>
 			<div class="filter flex items-center justify-between mb-6">

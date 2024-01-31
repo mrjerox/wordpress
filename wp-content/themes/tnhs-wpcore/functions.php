@@ -81,7 +81,7 @@ class Core
             "disable-rest-api",
             "disable-asset-versioning",
             "disable-trackbacks",
-            'google-analytics' => 'G-PN1JVW9WTE',
+            //'google-analytics' => 'G-PN1JVW9WTE',
             "js-to-footer",
             "nav-walker",
             "nice-search",

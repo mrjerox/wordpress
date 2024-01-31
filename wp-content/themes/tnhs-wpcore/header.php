@@ -75,6 +75,15 @@ if (is_paged()) {
     <meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
     <link rel="profile" href="https://gmpg.org/xfn/11" />
     <link type="image/x-icon" rel="shortcut icon" href="<?php echo FAVICON; ?>">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PN1JVW9WTE"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-PN1JVW9WTE');
+    </script>
     <?php wp_head(); ?>
 </head>
 

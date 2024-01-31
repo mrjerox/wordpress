@@ -18,7 +18,7 @@
 			foreach ($categories as $category) {
 			?>
 				<div class="featured-category">
-					<h3 class="title relative text-lg font-semibold mb-5 pb-2 before:content-[''] before:w-[50px] before:h-[3px] before:bg-gray-500 before:absolute before:bottom-0 before:left-0"><?=$category->name?></h3>
+					<div class="title relative text-lg font-semibold mb-5 pb-2 before:content-[''] before:w-[50px] before:h-[3px] before:bg-gray-500 before:absolute before:bottom-0 before:left-0"><?=$category->name?></div>
 					<div class="other-list">
 						<?php
 							$args = array(
