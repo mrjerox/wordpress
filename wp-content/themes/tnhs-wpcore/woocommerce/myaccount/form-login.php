@@ -23,8 +23,8 @@ if (!defined('ABSPATH')) {
 
 <section class="box-login-page py-12">
 	<div class="container lg:max-w-screen-lg">
-		<div class="flex">
-			<div class="basis-[50%] max-w-[50%] flex-none pr-6">
+		<div class="lg:flex">
+			<div class="lg:basis-[50%] lg:max-w-[50%] lg:flex-none lg:pr-6">
 				<div class="box-head mb-6">
 					<h2 class="title text-2xl font-semibold text-dark uppercase"><?php _e('Đăng nhập', 'core');?></h2>
 				</div>
@@ -44,7 +44,7 @@ if (!defined('ABSPATH')) {
 					<p id="login-message" class="text-sm text-red-600 font-semibold mt-4"></p>
 				</div>
 			</div>
-			<div class="basis-[50%] max-w-[50%] flex-none pl-6">
+			<div class="lg:basis-[50%] lg:max-w-[50%] lg:flex-none lg:pl-6 mt-12 lg:mt-0">
 				<div class="box-head mb-6">
 					<h2 class="title text-2xl font-semibold text-dark uppercase"><?php _e('Đăng ký', 'core');?></h2>
 				</div>

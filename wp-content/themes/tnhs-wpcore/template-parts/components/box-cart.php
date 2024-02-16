@@ -1,7 +1,7 @@
 <section class="box-hidden-cart" id="left-cart">
 	<div class="overlay"></div>
 	<div class="left-cart">
-		<h3 class="title relative text-lg font-semibold mb-5 pb-2 before:content-[''] before:w-[50px] before:h-[3px] before:bg-gray-500 before:absolute before:bottom-0 before:left-0"><?php _e('Giỏ hàng', TEXTDOMAIN); ?></h3>
+		<h3 class="title relative text-lg font-semibold mb-5 pb-2 before:content-[''] before:w-[50px] before:h-[3px] before:bg-gray-500 before:absolute before:bottom-0 before:left-0 hidden md:block"><?php _e('Giỏ hàng', TEXTDOMAIN); ?></h3>
 
 		<div class="cart-item-list">
 			<?php

@@ -194,6 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle remove item in cart
     const leftCart = document.querySelector('.left-cart')
+    // leftCart.classList.toggle('--pending')
+
     document.addEventListener('click', (e) => {
         let target = e.target
         let btnRemoveItems = document.querySelectorAll('.btn-remove-item')

@@ -166,7 +166,7 @@ class Core
             'ADD_TO_WISHLIST' => __('Đã thêm vào wishlist', TEXTDOMAIN),
             'ADD_TO_WISHLIST_EXIST' => __('Đã có trong wishlist', TEXTDOMAIN),
             'ADD_TO_CART' => __('Đã thêm vào giỏ hàng', TEXTDOMAIN),
-            'ADD_TO_CART_FAILED' => __('Thêm vào giỏ hàng không thành công', TEXTDOMAIN),
+            'ADD_TO_CART_FAILED' => __('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng', TEXTDOMAIN),
             'ACCOUNT_URL' => get_permalink(wc_get_page_id('myaccount')),
             'CART_URL' => wc_get_cart_url(),
         );
