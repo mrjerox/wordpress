@@ -31,6 +31,7 @@ require_once get_template_directory() . "/inc/Function.php";
 require_once get_template_directory() . "/inc/Menu.php";
 require_once get_template_directory() . "/inc/Redirect.php";
 require_once get_template_directory() . "/inc/Woocommerce.php";
+require_once get_template_directory() . "/inc/PaymentGateway.php";
 
 /**
  * Setup
