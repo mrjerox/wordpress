@@ -87,32 +87,6 @@ html
             animation: rolling .4s linear infinite
             z-index: 9
 
-.btn-remove-wishlist
-    position: absolute
-    top: 0
-    right: 0
-    width: 24px
-    height: 24px
-    display: inline-flex
-    align-items: center
-    justify-content: center
-    background-color: rgb(2 6 23/1)
-    color: #fff
-    transform: translateY(-30px)
-    opacity: 0
-    visibility: hidden
-    transition: all .4s ease
-
-.sheet-item
-    &.--wishlist-item
-        overflow: hidden
-        position: relative
-        &:hover
-            .btn-remove-wishlist
-                transform: translateY(0)
-                opacity: 1
-                visibility: visible
-
 .desc-body
     figure
         max-width: 100%
@@ -335,12 +309,6 @@ html
 
 .simpletoc-list
     padding: 1rem !important
-
-.other-list
-    .item
-        img
-            width: 100%
-            max-width: 65px
 
 .woocommerce-message
     margin-bottom: 1rem

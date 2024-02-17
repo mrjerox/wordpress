@@ -31,7 +31,10 @@ printf(
 	'<mark class="order-status">' . wc_get_order_status_name( $order->get_status() ) . '</mark>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	'<mark class="order-code">' . 'nncd' . $order->get_order_number() . '</mark>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 );
+
+$order_key = $order->get_order_key();
 ?>
+<a class="block mt-4" style="text-decoration: underline;" href="<?=wc_get_checkout_url() . 'order-received/' . $order->get_order_number() . '/?key=' . $order_key?>"><?php _e('Xem lại thông tin thanh toán', TEXTDOMAIN);?></a>
 </p>
 
 <?php if ( $notes ) : ?>

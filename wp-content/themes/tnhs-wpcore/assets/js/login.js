@@ -50,6 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let checkLengthValid = checkLength(password, 6, 25);
             let checkPasswordValid = checkPasswordsMatch(password, repassword);
 
+            console.log("??");
+
+            console.log(checkEmailValid, checkLengthValid, checkPasswordValid);
+            
             if (checkEmailValid && checkLengthValid && checkPasswordValid) {
                 target.classList.toggle('pending')
                 const response = await post(data)

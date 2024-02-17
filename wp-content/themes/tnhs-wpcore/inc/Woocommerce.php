@@ -31,6 +31,9 @@ class Core_Woocommerce
 		// YITH
 		add_filter('yith_wcwl_main_style_deps', "__return_empty_array");
 
+		// Custom gate way
+		add_filter( 'woocommerce_payment_gateways', array("Core_Woocommerce", "add_paypal_gateway_class"));
+
 		// Ajax handle
 		add_action("wp_ajax_woocommerce_ajax_add_to_cart", array("Core_Woocommerce", "woocommerce_ajax_add_to_cart"));
 		add_action("wp_ajax_nopriv_woocommerce_ajax_add_to_cart", array("Core_Woocommerce", "woocommerce_ajax_add_to_cart"));
@@ -67,6 +70,12 @@ class Core_Woocommerce
 	{
 		wp_deregister_style("wc-blocks-style");
 		wp_dequeue_style("wc-blocks-style");
+	}
+
+	// Custom gate way
+	public static function add_paypal_gateway_class($methods) {
+		$methods[] = 'custom_paypal_payment_gateway'; 
+		return $methods;
 	}
 
 	// Remove field
