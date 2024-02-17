@@ -221,7 +221,8 @@ html
         overflow-x: hidden
         -ms-overflow-style: none
         scrollbar-width: none
-        // s
+        @media (max-width: 767px)
+            padding-top: 4rem
 
         &::-webkit-scrollbar
             display: none
@@ -277,10 +278,63 @@ html
         .box-button
             position: absolute
             left: 50%
-            bottom: 1rem
             transform: translateX(-50%)
             z-index: 999
+            bottom: 1rem
             width: calc(100% - 3rem)
+            @media (max-width: 767px)
+                bottom: auto
+                top: 0
+
+.blog-detail
+    .blog-content
+        text-align: justify
+
+        h1, h2, h3, h4, h5, h6
+            margin-top: 1.25rem
+            margin-bottom: 1.25rem
+            font-weight: 700
+
+        p
+            margin-bottom: 1.25rem
+            margin-top: 1.25rem
+            
+        h1
+            font-size: 1.4rem
+
+        h2
+            font-size: 1.35rem
+        
+        h3
+            font-size: 1.25rem
+        
+        h4
+            font-size: 1.25rem
+
+        h5
+            font-size: 1.2rem
+
+        h6
+            font-size: 1.2rem
+
+        img
+            display: block
+            margin: 0 auto
+
+        figure
+            max-width: 100%
+            margin: 0 auto
+        
+        em
+            text-align: center
+            font-style: italic
+            font-weight: 400
+            display: block
+            margin-top: .5rem
+            margin-bottom: 1.5rem
+
+.simpletoc-list
+    padding: 1rem !important
 
 .other-list
     .item

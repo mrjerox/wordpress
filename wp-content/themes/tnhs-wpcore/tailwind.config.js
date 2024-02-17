@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "*.php",
-    "./page-template/*.php",
+    "./page-templates/**/*.php",
     "./template-parts/**/*.php",
     "./woocommerce/**/*.php",
   ],

@@ -37,7 +37,7 @@ exports.default = () => {
         './assets/sass/**/*.sass',
         './assets/js/*.js',
         '*.php',
-        './page-template/*.php',
+        './page-templates/*.php',
         './template-parts/**/*.php',
         './woocommerce/**/*.php',
     ], { events: 'change' }, gulp.parallel(css, js))
