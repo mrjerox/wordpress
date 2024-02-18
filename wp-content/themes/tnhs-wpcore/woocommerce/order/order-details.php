@@ -41,7 +41,7 @@ if ($show_downloads) {
 }
 ?>
 
-<?php if ( is_wc_endpoint_url( 'order-received' ) ) { ?>
+<?php if ( is_wc_endpoint_url( 'order-received' ) && $order->get_status() !== 'completed' ) { ?>
 	<section class="woocommerce-order-details">
 		<?php do_action('woocommerce_order_details_before_order_table', $order); ?>
 

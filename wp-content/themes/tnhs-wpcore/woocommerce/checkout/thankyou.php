@@ -126,7 +126,10 @@ defined('ABSPATH') || exit;
 			let target = e.currentTarget
 
 			if (target.getAttribute('data-url')) {
-				window.open(target.getAttribute('data-url'), '', 'height=800,width=576,popup=true')
+				let win = window.open(target.getAttribute('data-url'), '', 'height=800,width=576,popup=true')
+				if(win.closed) {
+					window.location.reload();
+				}
 				return
 			}
 
