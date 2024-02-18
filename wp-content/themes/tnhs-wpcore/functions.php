@@ -22,6 +22,7 @@ if (!defined("VERSION")) {
     define("ADMIN_AJAX_URL", admin_url("admin-ajax.php"));
     define("FAVICON", THEME_ASSETS . "/images/favicon.png");
     define("SCREEN_SHOT", THEME_URI . "/screenshot.png");
+    define("USD_RATE", 22000);
 }
 
 /**
@@ -31,7 +32,7 @@ require_once get_template_directory() . "/inc/Function.php";
 require_once get_template_directory() . "/inc/Menu.php";
 require_once get_template_directory() . "/inc/Redirect.php";
 require_once get_template_directory() . "/inc/Woocommerce.php";
-require_once get_template_directory() . "/inc/PaymentGateway.php";
+// require_once get_template_directory() . "/inc/PaymentGateway.php";
 
 /**
  * Setup
@@ -168,8 +169,17 @@ class Core
             'ADD_TO_WISHLIST_EXIST' => __('Đã có trong wishlist', TEXTDOMAIN),
             'ADD_TO_CART' => __('Đã thêm vào giỏ hàng', TEXTDOMAIN),
             'ADD_TO_CART_FAILED' => __('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng', TEXTDOMAIN),
+            'PAYPAL_CHECK' => __('Đang kiểm tra trạng thái thanh toán Paypal!', TEXTDOMAIN),
+            'PAYPAL_CHECK_FAILED' => __('Không thể xác định trạng thái giao dịch Paypal', TEXTDOMAIN),
+            'PAYPAL_CHECK_SUCCESS' => __('Xác nhận thành công!', TEXTDOMAIN),
             'ACCOUNT_URL' => get_permalink(wc_get_page_id('myaccount')),
             'CART_URL' => wc_get_cart_url(),
+            'DOWNLOADS_URL' =>  wc_get_account_endpoint_url('downloads'),
+            'ORDERS_URL' =>  wc_get_account_endpoint_url('orders'),
+            'PAYPAL_ORDER' => 'https://api-m.sandbox.paypal.com/v2/checkout/orders',
+            'PAYPAL_TOKEN' => 'Bearer A21AAJx4jssqSE-Qq9jfBrfEIp5yk94XvjheH-krhg4E5mJiYpMIo7Zw-DQKBm6dZpUgk-IVJShhQGZCWmzK5NXmvrqw0nrJA',
+            'HOME_URL' => HOME_URL,
+            'USD_RATE' => USD_RATE,
         );
         wp_register_script('wpcore-js', THEME_ASSETS . "/scripts/scripts.min.js");
         wp_localize_script('wpcore-js', 'obj', $wp_script_data);

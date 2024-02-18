@@ -18,6 +18,81 @@ const post = async (data) => {
     }
 }
 
+// Paypal 
+const payPalCreateOrder = async (orderId, orderTotal) => {
+    try {
+        const response = await fetch(obj.PAYPAL_ORDER, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': obj.PAYPAL_TOKEN,
+            },
+            body: JSON.stringify({ 
+                "intent": "CAPTURE", 
+                "purchase_units": [
+                    { 
+                        //"reference_id": "d9f80740-38f0-11e8-b467-0ed5f89f718b", 
+                        "amount": { 
+                            "currency_code": "USD", 
+                            "value": orderTotal, 
+                        } 
+                    } 
+                ], 
+                "payment_source": { 
+                    "paypal": { 
+                        "experience_context": { 
+                            "payment_method_preference": "IMMEDIATE_PAYMENT_REQUIRED",
+                            "brand_name": "nguoinghienchoidan", 
+                            "locale": "en-US", 
+                            "landing_page": "LOGIN", 
+                            //  "shipping_preference": "SET_PROVIDED_ADDRESS", 
+                            "user_action": "PAY_NOW", 
+                            "return_url": `${obj.HOME_URL}/check-paypal-status?order-id=${orderId}`, 
+                            "cancel_url": window.location.href, 
+                            } 
+                        } 
+                    } 
+                }
+            )
+        })
+
+        return await response.json()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const payPalCheckOrder = async (id) => {
+    try {
+        const response = await fetch(obj.PAYPAL_ORDER + '/' + id, {
+            headers: {
+                'Authorization': obj.PAYPAL_TOKEN,
+                'Content-Type': 'application/json',
+            }
+        })
+
+        return await response.json()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const payPalCaptureOrder = async (id) => {
+    try {
+        const response = await fetch(obj.PAYPAL_ORDER + '/' + id + '/capture', {
+            method: 'POST',
+            headers: {
+                'Authorization': obj.PAYPAL_TOKEN,
+                'Content-Type': 'application/json',
+            }
+        })
+
+        return await response.json()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Lazyloading 
     const lazyLoadInstance = new LazyLoad({
@@ -239,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
 
-    // Handle add to quick buy
+    // Handle quick buy
     const btnBuy = document.querySelectorAll('.btn-buy')
     btnBuy.forEach(element => {
         element.addEventListener('click', async (e) => {
@@ -261,7 +336,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Failed
-            console.log(response)
             return
         })
     })

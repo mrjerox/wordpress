@@ -32,7 +32,7 @@ class Core_Woocommerce
 		add_filter('yith_wcwl_main_style_deps', "__return_empty_array");
 
 		// Custom gate way
-		add_filter( 'woocommerce_payment_gateways', array("Core_Woocommerce", "add_paypal_gateway_class"));
+		// add_filter( 'woocommerce_payment_gateways', array("Core_Woocommerce", "add_paypal_gateway_class"));
 
 		// Ajax handle
 		add_action("wp_ajax_woocommerce_ajax_add_to_cart", array("Core_Woocommerce", "woocommerce_ajax_add_to_cart"));
@@ -46,6 +46,14 @@ class Core_Woocommerce
 
 		add_action("wp_ajax_ajax_register_customer", array("Core_Woocommerce", "ajax_register_customer"));
 		add_action("wp_ajax_nopriv_ajax_register_customer", array("Core_Woocommerce", "ajax_register_customer"));
+
+		add_action("wp_ajax_woocomerce_ajax_update_order_meta_data", array("Core_Woocommerce", "woocomerce_ajax_update_order_meta_data"));
+		add_action("wp_ajax_nopriv_woocomerce_ajax_update_order_meta_data", array("Core_Woocommerce", "woocomerce_ajax_update_order_meta_data"));
+
+		add_action("wp_ajax_ajax_check_paypal_status", array("Core_Woocommerce", "ajax_check_paypal_status"));
+		add_action("wp_ajax_nopriv_ajax_check_paypal_status", array("Core_Woocommerce", "ajax_check_paypal_status"));
+
+		
 	}
 	/**
 	 * Init
@@ -73,10 +81,10 @@ class Core_Woocommerce
 	}
 
 	// Custom gate way
-	public static function add_paypal_gateway_class($methods) {
-		$methods[] = 'custom_paypal_payment_gateway'; 
-		return $methods;
-	}
+	// public static function add_paypal_gateway_class($methods) {
+	// 	$methods[] = 'custom_paypal_payment_gateway'; 
+	// 	return $methods;
+	// }
 
 	// Remove field
 	public static function remove_woo_checkout_fields($fields)
@@ -353,6 +361,50 @@ class Core_Woocommerce
 		update_user_meta($user_id, 'billing_last_name', ' ');
 		update_user_meta($user_id, 'billing_email', $email);
 		wp_send_json_success(__('Đăng ký thành công, xin chân thành cảm ơn quý khách đã sử dụng dịch vụ', TEXTDOMAIN));
+	}
+
+	// Save Paypal order id
+	public static function woocomerce_ajax_update_order_meta_data() 
+	{
+		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'update_order_meta_data_nonce')) {
+			wp_send_json_error(__('Not valid', TEXTDOMAIN));
+			exit;
+		}
+
+		$order_id = $_POST['order_id'];
+		$paypal_order_id = $_POST['paypal_order_id'];
+		$paypal_order_url = $_POST['paypal_order_url'];
+
+		$order = wc_get_order( $order_id ); //Get the WC_Order object
+		$order->update_meta_data('paypal_order_id', $paypal_order_id); // Add the custom field
+		$order->update_meta_data('paypal_order_url', $paypal_order_url); // Add the custom field
+		$order->save(); // Save the data
+
+		wp_send_json_success('Done');
+	}
+
+	// Check Paypal order id
+	public static function ajax_check_paypal_status() {
+		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'paypal_nonce')) {
+			wp_send_json_error(__('Not valid', TEXTDOMAIN));
+			exit;
+		}
+
+		$order_id = $_POST['order_id'];
+		$token = $_POST['token'];
+		$order = wc_get_order( $order_id ); //Get the WC_Order object
+		
+		if (empty($order)) {
+			wp_send_json_error(__('Đơn hàng không tồn tại!', TEXTDOMAIN));
+		}
+
+		if ($token === $order->get_meta('paypal_order_id')) {
+			$order->set_status('completed');
+			$order->save();
+			wp_send_json_success(__('Xác nhận thành công!', TEXTDOMAIN));
+		}
+
+		wp_send_json_error(__('Paypal token và đơn hàng không hợp lệ, vui lòng liên hệ với quản trị viên', TEXTDOMAIN));
 	}
 }
 

@@ -88,8 +88,15 @@ defined('ABSPATH') || exit;
 									<strong><?php echo wp_kses_post($order->get_payment_method_title()); ?></strong>
 								</li>
 							<?php endif; ?>
-
 						</ul>
+
+						<?php
+							if (current_user_can('administrator')) { 
+						?>
+
+						<button id="btn-generate-paypal" type="button" class="btn !inline-flex items-center my-3 uppercase px-4 py-2 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-gray-100 duration-300 font-medium text-sm" data-url="<?=$order->get_meta('paypal_order_url')?>" data-nonce="<?=wp_create_nonce('update_order_meta_data_nonce')?>" data-order="<?=$order->get_id()?>" data-total="<?=round($order->get_total() / USD_RATE, 2)?>"><?php _e('Thanh toán bằng Paypal', TEXTDOMAIN); ?><i class="fa-brands fa-cc-paypal ml-2" style="font-size: 30px;"></i></button>
+
+						<?php } ?>
 
 					<?php endif; ?>
 
@@ -105,8 +112,44 @@ defined('ABSPATH') || exit;
 			<div class="right basis-[100%] max-w-[100%] md:basis-[30%] md:max-w-[30%] flex-none md:pl-4 mt-6 md:mt-0">
 				<img src="<?=THEME_ASSETS?>/images/bank.png" alt="Nguyễn Việt Tiến Momo">
 				<img src="<?=THEME_ASSETS?>/images/bank2.jpeg" alt="Nguyễn Việt Tiến Techcombank">
-				<a href="https://www.paypal.com/paypalme/viettien269" target="_blank" class="flex items-center font-semibold text-sm mt-6"><i class="fa-brands fa-cc-paypal mr-2" style="font-size: 30px;"></i>Paypal</a>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+	window.addEventListener('DOMContentLoaded', () => {
+		const btnCreatePayPalUrl = document.querySelector('#btn-generate-paypal');
+
+		btnCreatePayPalUrl.addEventListener('click', async (e) => {
+			e.preventDefault()
+			let target = e.currentTarget
+
+			if (target.getAttribute('data-url')) {
+				window.open(target.getAttribute('data-url'), '', 'height=800,width=576,popup=true')
+				return
+			}
+
+			target.classList.toggle('pending')
+
+			let response = await payPalCreateOrder(target.getAttribute('data-order'), target.getAttribute('data-total'))
+
+			if (response.id) {
+				target.remove()
+				let data = {
+					action: 'woocomerce_ajax_update_order_meta_data',
+					nonce: target.getAttribute('data-nonce'),
+					order_id: target.getAttribute('data-order'),
+					paypal_order_id: response.id,
+					paypal_order_url: response.links[1].href,
+				}
+
+				let updateOrderResponse = await post(data)
+				console.log(updateOrderResponse);
+				target.classList.toggle('pending')
+				window.open(response.links[1].href, '', 'height=800,width=576,popup=true')
+			}
+			console.log(response)
+		})
+	})
+</script>
